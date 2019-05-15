@@ -1,7 +1,6 @@
 package com.darkminstrel.weatherradar
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -25,15 +24,16 @@ class MainActivity : AppCompatActivity() {
             .flatMap { ts -> api.getImage(radar.code, ts) }
             .observeOn(Schedulers.computation())
             .map { bitmap -> Utils.cropBitmap(bitmap) }
-            .doOnSuccess { bitmap -> DBG(RadarType.collectColors(bitmap)) }
+            .flatMap { bitmap -> Storage.write(this, bitmap) }
+            .doOnSuccess { bitmap ->
+                val types = RadarType.collectColors(bitmap)
+                DBG(types)
+            }
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess{ updateWidgets(this)}
             .subscribe(
-                {bitmap->
-                    view.setImage(bitmap)
-                },
-                {
-                    view.setError(it)
-                })
+                {bitmap->view.setImage(bitmap)},
+                {error->view.setError(error)})
     }
 
     override fun onDestroy() {
