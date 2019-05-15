@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
         view = ViewMain(findViewById(android.R.id.content))
         view.setProgress()
 
-        val radar = "UKBB"
+        val radar = Radars.KIEV
         val api = Api()
-        disposable = api.getLatestTimestamp(radar)
-            .flatMap { ts -> api.getImage(radar, ts) }
+        disposable = api.getLatestTimestamp(radar.code)
+            .flatMap { ts -> api.getImage(radar.code, ts) }
             .observeOn(Schedulers.computation())
             .map { bitmap -> Utils.cropBitmap(bitmap) }
             .doOnSuccess { bitmap -> DBG(RadarType.collectColors(bitmap)) }
@@ -40,8 +40,4 @@ class MainActivity : AppCompatActivity() {
         disposable?.dispose()
         super.onDestroy()
     }
-}
-
-fun DBG(s:Any?){
-    Log.d("RADARDBG", s.toString())
 }
