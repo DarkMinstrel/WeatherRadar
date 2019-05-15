@@ -18,7 +18,7 @@ fun sync(context: Context): Single<Bitmap>{
     return api.getLatestTimestamp(radar.code)
         .flatMap { ts -> api.getImage(radar.code, ts) }
         .observeOn(Schedulers.computation())
-        .map { bitmap -> Utils.cropBitmap(bitmap) }
+        .map { bitmap -> cropBitmap(bitmap) }
         .flatMap { bitmap -> Storage.write(context, bitmap) }
         .doOnSuccess { bitmap ->
             val types = RadarType.collectColors(bitmap)
@@ -26,6 +26,11 @@ fun sync(context: Context): Single<Bitmap>{
         }
         .observeOn(AndroidSchedulers.mainThread())
         .doOnSuccess{ updateWidgets(context) }
+}
+
+private fun cropBitmap(bitmap:Bitmap):Bitmap {
+    assertWorkerThread()
+    return Bitmap.createBitmap(bitmap, 16,1, 495-16, bitmap.height-2);
 }
 
 private fun updateWidgets(context: Context){
