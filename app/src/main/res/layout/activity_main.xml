@@ -8,6 +8,17 @@
         android:background="#CCCCCC"
         tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/dino"
+        android:drawablePadding="8dp"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:text="@string/network_error"/>
+
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"

@@ -12,7 +12,7 @@ private const val URL_PAGE = "http://www.meteoinfo.by/radar/?q=%s"
 private const val URL_IMAGE = "http://www.meteoinfo.by/radar/%s/%s_%s.png"
 
 class Api {
-    fun download(url:String): Single<ResponseBody> {
+    private fun download(url:String): Single<ResponseBody> {
         return Single.create {
             val client = OkHttpClient()
             val request = Request.Builder().url(url).build()

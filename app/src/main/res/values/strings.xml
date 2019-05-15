@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherRadar</string>
+
+    <string name="network_error">Server unavailable</string>
 </resources>
