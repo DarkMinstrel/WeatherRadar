@@ -22,7 +22,7 @@ class Api {
                     if(response.isSuccessful && body!=null) {
                         it.onSuccess(body)
                     }else{
-                        it.onError(IOException("Empty response"))
+                        it.onError(IOException("Empty response, code=${response.code()} body=${response.message()}"))
                     }
                 }
                 override fun onFailure(call: Call, e: IOException) {
