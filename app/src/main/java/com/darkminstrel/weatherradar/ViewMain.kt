@@ -12,6 +12,7 @@ class ViewMain(root: View) {
     private val progress = root.findViewById<View>(R.id.progress)
     private val error = root.findViewById<View>(R.id.error)
     private val bottomSheet = root.findViewById<View>(R.id.bottom_sheet)
+    private val bottomSheetShadow = root.findViewById<View>(R.id.shadow)
     private val bottomSheerContainer = bottomSheet.findViewById<ViewGroup>(R.id.bottom_sheet_container)
 
     init {
@@ -23,6 +24,7 @@ class ViewMain(root: View) {
         error.visibility = View.GONE
         ivRadar.visibility = View.INVISIBLE
         bottomSheet.visibility = View.INVISIBLE
+        bottomSheetShadow.visibility = View.INVISIBLE
     }
 
     fun setError(t:Throwable){
@@ -31,6 +33,7 @@ class ViewMain(root: View) {
         error.visibility = View.VISIBLE
         ivRadar.visibility = View.INVISIBLE
         bottomSheet.visibility = View.INVISIBLE
+        bottomSheetShadow.visibility = View.INVISIBLE
     }
 
     fun setImage(bitmap: Bitmap){
@@ -39,6 +42,9 @@ class ViewMain(root: View) {
         ivRadar.visibility = View.VISIBLE
         ivRadar.setImageBitmap(bitmap)
         bottomSheet.visibility = View.VISIBLE
+        bottomSheetShadow.visibility = View.VISIBLE
+        ivRadar.alpha = 0f
+        ivRadar.animate().alpha(1f).start()
     }
 
     private fun fillLegend(){
@@ -48,7 +54,7 @@ class ViewMain(root: View) {
             val view = inflater.inflate(R.layout.legend_item, bottomSheerContainer, false)
             bottomSheerContainer.addView(view)
             view.findViewById<TextView>(android.R.id.text1).setText(type.stringId)
-            view.findViewById<View>(android.R.id.icon).setBackgroundColor(0xFF000000.toInt()+type.color)
+            view.findViewById<View>(android.R.id.icon).setBackgroundColor(type.color)
         }
     }
 }
