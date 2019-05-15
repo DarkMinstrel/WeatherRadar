@@ -2,8 +2,8 @@ package com.darkminstrel.weatherradar
 
 import android.graphics.Bitmap
 import android.os.Looper
-import android.util.SparseArray
-import android.util.SparseIntArray
+import android.os.SystemClock
+import android.util.Log
 
 class Utils {
     companion object{
@@ -15,6 +15,19 @@ class Utils {
     }
 }
 
+class Stopwatch(){
+    private val tsStarted = SystemClock.elapsedRealtime()
+    fun debug(s:String){
+        val elapsed = SystemClock.elapsedRealtime() - tsStarted
+        DBG("$s lasted for $elapsed ms")
+    }
+}
+
 fun assertWorkerThread(){
     if(Thread.currentThread() === Looper.getMainLooper().thread) throw RuntimeException("assertWorkerThread() failed")
+}
+
+
+fun DBG(s:Any?){
+    Log.d("RADARDBG", s.toString())
 }

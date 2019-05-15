@@ -20,4 +20,10 @@
     <string name="radar_15">Шквал слабый</string>
     <string name="radar_16">Шквал умеренный</string>
     <string name="radar_17">Шквал сильный</string>
+
+    <string name="city_kiev">Киев (Борисполь)</string>
+    <string name="city_minsk">Минск</string>
+    <string name="city_brest">Брест</string>
+    <string name="city_homel">Гомель</string>
+
 </resources>

@@ -6,23 +6,23 @@ import androidx.annotation.StringRes
 import java.util.*
 
 enum class RadarType(@StringRes val stringId:Int, val color:Int) {
-    CLOUD(R.string.radar_1, 0xFFFFFF),
-    RAIN_SMALL(R.string.radar_2, 0x9BEB8F),
-    RAIN_MEDIUM(R.string.radar_3, 0x58FF42),
-    RAIN_LARGE(R.string.radar_4, 0x47C278),
-    CONV_CLOUD(R.string.radar_5, 0x9BE1FF),
-    CONV_RAIN_SMALL(R.string.radar_6, 0x4793F9),
-    CONV_RAIN_MEDIUM(R.string.radar_7, 0x0C59FF),
-    CONV_RAIN_LARGE(R.string.radar_8, 0x6153C1),
-    STORM_SMALL(R.string.radar_9, 0xFF93A3),
-    STORM_MEDIUM(R.string.radar_10, 0xFF3F35),
-    STORM_LARGE(R.string.radar_11, 0xC20511),
-    HAIL_SMALL(R.string.radar_12, 0xFFEB0A),
-    HAIL_MEDIUM(R.string.radar_13, 0xFF9811),
-    HAIL_LARGE(R.string.radar_14, 0xA84C06),
-    HURRICANE_SMALL(R.string.radar_15, 0xDDA8FF),
-    HURRICANE_MEDIUM(R.string.radar_16, 0xE859FF),
-    HURRICANE_LARGE(R.string.radar_17, 0xBE1CFF),
+    CLOUD(R.string.radar_1, 0xFFFFFFFF.toInt()),
+    RAIN_SMALL(R.string.radar_2, 0xFF9BEB8F.toInt()),
+    RAIN_MEDIUM(R.string.radar_3, 0xFF58FF42.toInt()),
+    RAIN_LARGE(R.string.radar_4, 0xFF47C278.toInt()),
+    CONV_CLOUD(R.string.radar_5, 0xFF9BE1FF.toInt()),
+    CONV_RAIN_SMALL(R.string.radar_6, 0xFF4793F9.toInt()),
+    CONV_RAIN_MEDIUM(R.string.radar_7, 0xFF0C59FF.toInt()),
+    CONV_RAIN_LARGE(R.string.radar_8, 0xFF6153C1.toInt()),
+    STORM_SMALL(R.string.radar_9, 0xFFFF93A3.toInt()),
+    STORM_MEDIUM(R.string.radar_10, 0xFFFF3F35.toInt()),
+    STORM_LARGE(R.string.radar_11, 0xFFC20511.toInt()),
+    HAIL_SMALL(R.string.radar_12, 0xFFFFEB0A.toInt()),
+    HAIL_MEDIUM(R.string.radar_13, 0xFFFF9811.toInt()),
+    HAIL_LARGE(R.string.radar_14, 0xFFA84C06.toInt()),
+    HURRICANE_SMALL(R.string.radar_15, 0xFFDDA8FF.toInt()),
+    HURRICANE_MEDIUM(R.string.radar_16, 0xFFE859FF.toInt()),
+    HURRICANE_LARGE(R.string.radar_17, 0xFFBE1CFF.toInt()),
     ;
     companion object {
         private fun find(color: Int): RadarType?{
@@ -33,10 +33,12 @@ enum class RadarType(@StringRes val stringId:Int, val color:Int) {
             return Math.abs(Color.red(c1)-Color.red(c2))+Math.abs(Color.green(c1)-Color.green(c2))+Math.abs(Color.blue(c1)-Color.blue(c2))
         }
         fun collectColors(bitmap: Bitmap): Map<RadarType, Int> {
+            val stopwatch = Stopwatch()
             val map = IdentityHashMap<RadarType, Int>()
             for(x in 0 until bitmap.width){
                 for(y in 0 until bitmap.height){
                     val c = bitmap.getPixel(x,y)
+                    if(c == 0xFFCCCCCC.toInt()) continue
                     val type = find(c)
                     type?.let {
                         val oldCount = map[it] ?:0
@@ -44,8 +46,8 @@ enum class RadarType(@StringRes val stringId:Int, val color:Int) {
                     }
                 }
             }
-            val sorted = map.toList().sortedByDescending { (_, value) -> value}.toMap()
-            return sorted
+            stopwatch.debug("Collecting colors")
+            return map.toList().sortedByDescending { (_, value) -> value}.toMap()
         }
     }
 }
