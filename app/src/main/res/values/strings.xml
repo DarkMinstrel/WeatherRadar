@@ -1,5 +1,23 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:ignore="TypographyDashes">
     <string name="app_name">WeatherRadar</string>
 
-    <string name="network_error">Server unavailable</string>
+    <string name="network_error">Сервер недоступен</string>
+    <string name="radar_1">Слоистообразная облачность</string>
+    <string name="radar_2">Осадки слабые</string>
+    <string name="radar_3">Осадки умеренные</string>
+    <string name="radar_4">Осадки сильные</string>
+    <string name="radar_5">Конвективная облачность</string>
+    <string name="radar_6">Конвективные осадки слабые</string>
+    <string name="radar_7">Конвективные осадки умеренные</string>
+    <string name="radar_8">Конвективные осадки сильные</string>
+    <string name="radar_9">Гроза 30-70%</string>
+    <string name="radar_10">Гроза 70-90%</string>
+    <string name="radar_11">Гроза 90-100%</string>
+    <string name="radar_12">Град слабый</string>
+    <string name="radar_13">Град умеренный</string>
+    <string name="radar_14">Град сильный</string>
+    <string name="radar_15">Шквал слабый</string>
+    <string name="radar_16">Шквал умеренный</string>
+    <string name="radar_17">Шквал сильный</string>
 </resources>
