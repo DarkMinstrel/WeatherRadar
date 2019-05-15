@@ -1,8 +1,10 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.data
 
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.annotation.StringRes
+import com.darkminstrel.weatherradar.R
+import com.darkminstrel.weatherradar.Stopwatch
 import java.util.*
 
 enum class RadarType(@StringRes val stringId:Int, val color:Int) {
@@ -26,7 +28,7 @@ enum class RadarType(@StringRes val stringId:Int, val color:Int) {
     ;
     companion object {
         private fun find(color: Int): RadarType?{
-            for(type in values()) if(diff(type.color,color)<16) return type
+            for(type in values()) if(diff(type.color, color) <16) return type
             return null
         }
         private fun diff(c1:Int, c2:Int):Int{

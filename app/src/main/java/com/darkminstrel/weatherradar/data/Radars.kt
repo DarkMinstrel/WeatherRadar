@@ -1,6 +1,7 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.data
 
 import androidx.annotation.StringRes
+import com.darkminstrel.weatherradar.R
 
 enum class Radars(val code:String, @StringRes val cityId:Int) {
     KIEV("UKBB", R.string.city_kiev),

@@ -1,8 +1,9 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.rx
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.darkminstrel.weatherradar.assertWorkerThread
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 

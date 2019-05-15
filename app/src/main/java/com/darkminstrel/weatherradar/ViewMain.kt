@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.darkminstrel.weatherradar.data.RadarType
 
 class ViewMain(root: View) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)

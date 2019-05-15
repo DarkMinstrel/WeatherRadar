@@ -2,6 +2,10 @@ package com.darkminstrel.weatherradar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.darkminstrel.weatherradar.data.RadarType
+import com.darkminstrel.weatherradar.data.Radars
+import com.darkminstrel.weatherradar.rx.Api
+import com.darkminstrel.weatherradar.rx.Storage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

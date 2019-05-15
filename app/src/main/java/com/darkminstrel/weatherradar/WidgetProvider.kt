@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.RemoteViews
+import com.darkminstrel.weatherradar.rx.Storage
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class WidgetProvider: AppWidgetProvider() {

@@ -1,7 +1,8 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.rx
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.darkminstrel.weatherradar.assertWorkerThread
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.*
@@ -32,6 +33,17 @@ class Api {
         }
     }
 
+    private fun findTimestamp(radar:String, html:String):String {
+        val pattern = String.format("/%s/%s_\\d{10}.png", radar, radar)
+        val m = Pattern.compile(pattern).matcher(html)
+        if (m.find()) {
+            val s = m.group(0)
+            val m2 = Pattern.compile("\\d{10}").matcher(s)
+            if(m2.find()) return m2.group(0)
+        }
+        throw RuntimeException("Image URL not found")
+    }
+
     fun getLatestTimestamp(radar:String): Single<String>{
         val url = String.format(URL_PAGE, radar)
         return download(url)
@@ -47,15 +59,4 @@ class Api {
             .subscribeOn(Schedulers.io())
     }
 
-    private fun findTimestamp(radar:String, html:String):String {
-        assertWorkerThread()
-        val pattern = String.format("/%s/%s_\\d{10}.png", radar, radar)
-        val m = Pattern.compile(pattern).matcher(html)
-        if (m.find()) {
-            val s = m.group(0)
-            val m2 = Pattern.compile("\\d{10}").matcher(s)
-            if(m2.find()) return m2.group(0)
-        }
-        throw RuntimeException("Image URL not found")
-    }
 }
