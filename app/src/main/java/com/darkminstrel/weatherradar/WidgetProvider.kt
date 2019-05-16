@@ -8,6 +8,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.widget.RemoteViews
 import com.darkminstrel.weatherradar.rx.Storage
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +23,13 @@ class WidgetProvider: AppWidgetProvider() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe (
                     {bitmap -> updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)},
-                    {error -> DBG(error)})
+                    {error ->
+                        run {
+                            val bitmap = (context.getDrawable(R.drawable.dino) as BitmapDrawable).bitmap
+                            updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)
+                            DBG(error)
+                        }
+                    })
         }
     }
 

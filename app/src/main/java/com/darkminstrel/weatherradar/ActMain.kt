@@ -17,16 +17,18 @@ class ActMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main)
-
+        view = ViewMain(findViewById(android.R.id.content))
         SyncService.schedule(this, false)
+        reload()
+    }
 
+    private fun reload(){
         val radar = Preferences.getRadar(this)
         val title = String.format("%s %s", getString(R.string.app_name), getString(radar.cityId))
         setTitle(title)
 
-        view = ViewMain(findViewById(android.R.id.content))
         view.setProgress()
-
+        disposable?.dispose()
         disposable = getSyncSingle(this)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -41,10 +43,15 @@ class ActMain : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.menu_settings){
-            startActivity(Intent(this, ActSettings::class.java))
+            startActivityForResult(Intent(this, ActSettings::class.java), 1)
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        reload()
     }
 
     override fun onDestroy() {
