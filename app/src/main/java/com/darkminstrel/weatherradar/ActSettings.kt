@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 class ActSettings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setResult(Activity.RESULT_OK)   //as widget configuration activity
+        setResult(Activity.RESULT_OK)
 
         supportFragmentManager
             .beginTransaction()

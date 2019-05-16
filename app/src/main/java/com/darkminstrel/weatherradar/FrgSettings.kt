@@ -5,7 +5,6 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.darkminstrel.weatherradar.data.Periods
 import com.darkminstrel.weatherradar.data.Radars
-import com.darkminstrel.weatherradar.rx.getSyncSingle
 
 class FrgSettings : PreferenceFragmentCompat() {
 
