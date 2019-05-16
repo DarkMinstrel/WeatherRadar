@@ -12,10 +12,10 @@ import android.content.Context
 import android.os.Build
 import java.util.concurrent.TimeUnit
 
-private const val JOB_ID = 1
 class SyncService : JobService() {
 
     companion object {
+        private const val JOB_ID = 1
         fun schedule(context: Context){
             val jobScheduler = context.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
             if(jobScheduler.allPendingJobs.isNotEmpty()) {
@@ -53,12 +53,12 @@ class SyncService : JobService() {
     private fun onJobFinished(params: JobParameters, error:Throwable?){
         if(error==null) DBG("Job finished")
         else DBG("Job failed with $error")
-        jobFinished(params, true)
+        jobFinished(params, false)
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
         disposable?.dispose()
-        return true //wants reschedule
+        return false //don't reschedule
     }
 
 }
