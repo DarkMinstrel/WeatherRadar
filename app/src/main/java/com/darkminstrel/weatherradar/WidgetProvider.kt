@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -33,6 +34,17 @@ class WidgetProvider: AppWidgetProvider() {
             views.setOnClickPendingIntent(R.id.iv_radar, pendingIntent)
             views.setImageViewBitmap(R.id.iv_radar, bitmap)
             appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+    }
+
+    companion object {
+        fun updateAllWidgets(context: Context){
+            assertUiThread()
+            val intent = Intent(context, WidgetProvider::class.java)
+            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+            context.sendBroadcast(intent)
         }
     }
 }

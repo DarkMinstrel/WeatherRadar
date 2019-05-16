@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         disposable = sync(this)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {bitmap->view.setImage(bitmap)},
+                {pack->view.setImage(pack.bitmap)},
                 {error->view.setError(error)})
     }
 

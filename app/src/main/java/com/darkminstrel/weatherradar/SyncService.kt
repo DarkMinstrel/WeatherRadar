@@ -22,7 +22,6 @@ class SyncService : JobService() {
                 DBG("Job is already scheduled")
                 return
             }
-
             val builder = JobInfo.Builder(JOB_ID, ComponentName(context, SyncService::class.java))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPeriodic(TimeUnit.SECONDS.toMillis(10))
@@ -46,7 +45,7 @@ class SyncService : JobService() {
         disposable = sync(applicationContext)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {bitmap -> onJobFinished(params, null)},
+                {pack -> onJobFinished(params, null)},
                 {error -> onJobFinished(params, error)})
         return true //job hasn't finished yet
     }

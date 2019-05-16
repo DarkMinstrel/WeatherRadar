@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.darkminstrel.weatherradar.assertWorkerThread
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
@@ -29,11 +30,11 @@ class Storage {
             }
         }
 
-        fun write(context: Context, bitmap: Bitmap): Single<Bitmap>{
-            return Single
-                .fromCallable {
+        fun write(context: Context, bitmap: Bitmap): Completable {
+            return Completable
+                .fromAction {
                     writeImpl(context, bitmap)
-                    bitmap
+
                 }
                 .subscribeOn(Schedulers.io())
         }
