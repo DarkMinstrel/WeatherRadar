@@ -24,7 +24,7 @@ class SyncService : JobService() {
             }
             val builder = JobInfo.Builder(JOB_ID, ComponentName(context, SyncService::class.java))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(TimeUnit.SECONDS.toMillis(10))
+                .setPeriodic(Preferences.getUpdatePeriodMillis())
                 .setPersisted(true)
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 builder.setEstimatedNetworkBytes(115000, 1000)
