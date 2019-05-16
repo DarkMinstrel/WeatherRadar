@@ -28,7 +28,7 @@ class WidgetProvider: AppWidgetProvider() {
 
     private fun updateWidgets(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray, bitmap: Bitmap){
         for(appWidgetId in appWidgetIds) {
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, ActMain::class.java)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
             val views = RemoteViews(context.packageName, R.layout.widget_main)
             views.setOnClickPendingIntent(R.id.iv_radar, pendingIntent)

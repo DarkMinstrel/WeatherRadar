@@ -3,6 +3,7 @@
     tools:ignore="TypographyDashes">
 
     <string name="app_name">Метеорадар</string>
+    <string name="settings">Настройки</string>
 
     <string name="network_error">Сервер недоступен</string>
     <string name="radar_1">Слоистообразная облачность</string>
