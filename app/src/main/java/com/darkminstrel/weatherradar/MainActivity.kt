@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        SyncService.schedule(this)
+
         view = ViewMain(findViewById(android.R.id.content))
         view.setProgress()
 
