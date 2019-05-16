@@ -2,6 +2,7 @@ package com.darkminstrel.weatherradar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.darkminstrel.weatherradar.data.Radars
 import com.darkminstrel.weatherradar.rx.sync
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,6 +17,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         SyncService.schedule(this)
+
+        val radar = Preferences.getRadar()
+        val title = String.format("%s %s", getString(R.string.app_name), getString(radar.cityId))
+        setTitle(title)
 
         view = ViewMain(findViewById(android.R.id.content))
         view.setProgress()
