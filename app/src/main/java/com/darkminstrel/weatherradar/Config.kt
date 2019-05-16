@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit
 
 class Config {
     companion object {
-        val DEFAULT_UPDATE_PERIOD = TimeUnit.MINUTES.toMillis(60)
-        val DEFAULT_RADAR = Radars.KIEV
+        val DEFAULT_UPDATE_PERIOD = 0L
+        val DEFAULT_RADAR = Radars.KIEV.code
     }
 }

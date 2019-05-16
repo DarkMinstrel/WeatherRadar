@@ -2,7 +2,7 @@ package com.darkminstrel.weatherradar
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import com.darkminstrel.weatherradar.rx.sync
+import com.darkminstrel.weatherradar.rx.getSyncSingle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import android.app.job.JobInfo
@@ -10,29 +10,38 @@ import android.content.ComponentName
 import android.app.job.JobScheduler
 import android.content.Context
 import android.os.Build
-import java.util.concurrent.TimeUnit
+import com.darkminstrel.weatherradar.data.Periods
 
 class SyncService : JobService() {
 
     companion object {
+
         private const val JOB_ID = 1
-        fun schedule(context: Context){
+
+        fun schedule(context: Context, force:Boolean){
             val jobScheduler = context.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-            if(jobScheduler.allPendingJobs.isNotEmpty()) {
+            val period = Preferences.getUpdatePeriod(context)
+
+            if(!force && jobScheduler.allPendingJobs.isNotEmpty()) {
                 DBG("Job is already scheduled")
                 return
             }
-            val builder = JobInfo.Builder(JOB_ID, ComponentName(context, SyncService::class.java))
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(Preferences.getUpdatePeriodMillis())
-                .setPersisted(true)
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                builder.setEstimatedNetworkBytes(115000, 1000)
-            }
-            val result = jobScheduler.schedule(builder.build())
-            when(result){
-                JobScheduler.RESULT_FAILURE -> DBG("Job was NOT scheduled")
-                JobScheduler.RESULT_SUCCESS -> DBG("Job was successfully scheduled")
+            if(period==Periods.NONE) {
+                jobScheduler.cancel(JOB_ID)
+                DBG("Job was canceled")
+            }else{
+                val builder = JobInfo.Builder(JOB_ID, ComponentName(context, SyncService::class.java))
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPeriodic(period.millis)
+                    .setPersisted(true)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    builder.setEstimatedNetworkBytes(115000, 1000)
+                }
+                val result = jobScheduler.schedule(builder.build())
+                when (result) {
+                    JobScheduler.RESULT_FAILURE -> DBG("Job was NOT scheduled")
+                    JobScheduler.RESULT_SUCCESS -> DBG("Job was successfully scheduled to '${period.getString(context)}'")
+                }
             }
         }
     }
@@ -42,7 +51,7 @@ class SyncService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         DBG("Job started")
         disposable?.dispose()
-        disposable = sync(applicationContext)
+        disposable = getSyncSingle(applicationContext)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {pack -> onJobFinished(params, null)},

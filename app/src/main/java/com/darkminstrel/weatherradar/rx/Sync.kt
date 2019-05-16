@@ -8,8 +8,8 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-fun sync(context: Context): Single<ContentPack>{
-    val radar = Preferences.getRadar()
+fun getSyncSingle(context: Context): Single<ContentPack>{
+    val radar = Preferences.getRadar(context)
     val api = Api()
     return api.getLatestTimestamp(radar.code)
         .flatMap { ts -> api.getImage(radar.code, ts).map{ bitmap -> Pair(ts,bitmap) }}

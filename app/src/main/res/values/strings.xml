@@ -5,6 +5,10 @@
     <string name="app_name">Метеорадар</string>
     <string name="settings">Настройки</string>
 
+    <string name="radar">Радар</string>
+    <string name="update_period">Период обновления</string>
+    <string name="dont_update">не обновлять</string>
+
     <string name="network_error">Сервер недоступен</string>
     <string name="radar_1">Слоистообразная облачность</string>
     <string name="radar_2">Осадки слабые</string>
@@ -29,4 +33,14 @@
     <string name="city_brest">Брест</string>
     <string name="city_homel">Гомель</string>
 
+    <plurals name="hours">
+        <item quantity="one">%d час</item>
+        <item quantity="few">%d часа</item>
+        <item quantity="other">%d часов</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d минута</item>
+        <item quantity="few">%d минуты</item>
+        <item quantity="other">%d минут</item>
+    </plurals>
 </resources>

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.darkminstrel.weatherradar.rx.sync
+import com.darkminstrel.weatherradar.rx.getSyncSingle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
@@ -18,16 +18,16 @@ class ActMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main)
 
-        SyncService.schedule(this)
+        SyncService.schedule(this, false)
 
-        val radar = Preferences.getRadar()
+        val radar = Preferences.getRadar(this)
         val title = String.format("%s %s", getString(R.string.app_name), getString(radar.cityId))
         setTitle(title)
 
         view = ViewMain(findViewById(android.R.id.content))
         view.setProgress()
 
-        disposable = sync(this)
+        disposable = getSyncSingle(this)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {pack->view.setImage(pack.bitmap)},
