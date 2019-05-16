@@ -35,6 +35,7 @@ class ContentPack(ts:String, rawBitmap: Bitmap) {
             paint.color = Color.BLACK
             paint.typeface = create(Typeface.DEFAULT, Typeface.BOLD);
             paint.textSize = 32f
+            paint.isAntiAlias = true
             val w = paint.measureText(time)
             canvas.drawText(time, bitmap.width - w - 16f, 16f + paint.textSize, paint)
         }
