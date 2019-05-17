@@ -4,7 +4,6 @@ import android.graphics.*
 import android.graphics.Typeface.create
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.assertWorkerThread
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,13 +11,13 @@ import java.util.*
 class ContentPack(ts:String, rawBitmap: Bitmap) {
 
     val bitmap:Bitmap
-    val types:Map<RadarType, Int>
+    val types:Map<WeatherType, Int>
     val millis:Long
 
     init{
         assertWorkerThread()
         this.bitmap = cropBitmap(rawBitmap)
-        this.types = RadarType.collectColors(this.bitmap)
+        this.types = WeatherType.collectColors(this.bitmap)
         this.millis = ts.toLong()*1000
         drawTime(bitmap, millis)
         DBG(types)

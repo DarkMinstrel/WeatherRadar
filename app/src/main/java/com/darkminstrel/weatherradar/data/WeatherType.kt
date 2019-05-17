@@ -8,7 +8,7 @@ import com.darkminstrel.weatherradar.Stopwatch
 import com.darkminstrel.weatherradar.assertWorkerThread
 import java.util.*
 
-enum class RadarType(@StringRes val stringId:Int, val color:Int) {
+enum class WeatherType(@StringRes val stringId:Int, val color:Int) {
     CLOUD(R.string.radar_1, 0xFFFFFFFF.toInt()),
     RAIN_SMALL(R.string.radar_2, 0xFF9BEB8F.toInt()),
     RAIN_MEDIUM(R.string.radar_3, 0xFF58FF42.toInt()),
@@ -28,17 +28,17 @@ enum class RadarType(@StringRes val stringId:Int, val color:Int) {
     HURRICANE_LARGE(R.string.radar_17, 0xFFBE1CFF.toInt()),
     ;
     companion object {
-        private fun find(color: Int): RadarType?{
+        private fun find(color: Int): WeatherType?{
             for(type in values()) if(diff(type.color, color) <16) return type
             return null
         }
         private fun diff(c1:Int, c2:Int):Int{
             return Math.abs(Color.red(c1)-Color.red(c2))+Math.abs(Color.green(c1)-Color.green(c2))+Math.abs(Color.blue(c1)-Color.blue(c2))
         }
-        fun collectColors(bitmap: Bitmap): Map<RadarType, Int> {
+        fun collectColors(bitmap: Bitmap): Map<WeatherType, Int> {
             assertWorkerThread()
             val stopwatch = Stopwatch()
-            val map = IdentityHashMap<RadarType, Int>()
+            val map = IdentityHashMap<WeatherType, Int>()
             for(x in 0 until bitmap.width){
                 for(y in 0 until bitmap.height){
                     val c = bitmap.getPixel(x,y)

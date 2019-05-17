@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.darkminstrel.weatherradar.data.RadarType
+import com.darkminstrel.weatherradar.data.WeatherType
 
 class ViewMain(root: View) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)
@@ -51,7 +51,7 @@ class ViewMain(root: View) {
     private fun fillLegend(){
         bottomSheerContainer.removeAllViews()
         val inflater = LayoutInflater.from(bottomSheerContainer.context)
-        for(type in RadarType.values()){
+        for(type in WeatherType.values()){
             val view = inflater.inflate(R.layout.legend_item, bottomSheerContainer, false)
             bottomSheerContainer.addView(view)
             view.findViewById<TextView>(android.R.id.text1).setText(type.stringId)
