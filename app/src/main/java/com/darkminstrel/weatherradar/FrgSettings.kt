@@ -2,7 +2,9 @@ package com.darkminstrel.weatherradar
 
 import android.content.Context
 import android.os.Bundle
+import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.darkminstrel.weatherradar.data.Periods
 import com.darkminstrel.weatherradar.data.Radars
@@ -11,6 +13,7 @@ class FrgSettings : PreferenceFragmentCompat() {
 
     private lateinit var listRadars:ListPreference
     private lateinit var listPeriods:ListPreference
+    private lateinit var cbWifiOnly:CheckBoxPreference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val context = context!!
@@ -31,6 +34,11 @@ class FrgSettings : PreferenceFragmentCompat() {
         }
         screen.addPreference(listRadars)
 
+        val categoryUpdate = PreferenceCategory(context)
+        categoryUpdate.title = getString(R.string.background_updates)
+        categoryUpdate.isIconSpaceReserved = false
+        screen.addPreference(categoryUpdate)
+
         listPeriods = ListPreference(context)
         listPeriods.key = Preferences.KEY_PERIOD
         listPeriods.title = getString(R.string.update_period)
@@ -44,7 +52,19 @@ class FrgSettings : PreferenceFragmentCompat() {
             SyncService.schedule(context, true)
             false
         }
-        screen.addPreference(listPeriods)
+        categoryUpdate.addPreference(listPeriods)
+
+        cbWifiOnly = CheckBoxPreference(context)
+        cbWifiOnly.key = Preferences.KEY_WIFI_ONLY
+        cbWifiOnly.title = getString(R.string.wifi_only)
+        cbWifiOnly.isIconSpaceReserved = false
+        cbWifiOnly.setOnPreferenceChangeListener { preference, newValue ->
+            Preferences.putWifiOnly(context, newValue as Boolean)
+            refresh(context)
+            SyncService.schedule(context, true)
+            false
+        }
+        categoryUpdate.addPreference(cbWifiOnly)
 
         refresh(context)
 
@@ -54,6 +74,7 @@ class FrgSettings : PreferenceFragmentCompat() {
     private fun refresh(context: Context){
         val radar = Preferences.getRadar(context)
         val period = Preferences.getUpdatePeriod(context)
+        val wifiOnly = Preferences.getWifiOnly(context)
 
         listRadars.summary = getString(radar.cityId)
         listRadars.setValueIndex(Radars.values().indexOf(radar))
@@ -61,5 +82,6 @@ class FrgSettings : PreferenceFragmentCompat() {
         listPeriods.summary = period.getString(context)
         listPeriods.setValueIndex(Periods.values().indexOf(period))
 
+        cbWifiOnly.isChecked = wifiOnly
     }
 }

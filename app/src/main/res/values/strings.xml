@@ -6,7 +6,9 @@
     <string name="settings">Настройки</string>
 
     <string name="radar">Радар</string>
+    <string name="background_updates">Фоновое обновление</string>
     <string name="update_period">Период обновления</string>
+    <string name="wifi_only">Только по Wi-Fi</string>
     <string name="dont_update">не обновлять</string>
 
     <string name="network_error">Сервер недоступен</string>

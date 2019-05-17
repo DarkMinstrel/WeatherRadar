@@ -18,11 +18,12 @@ class SyncService : JobService() {
 
         private const val JOB_ID = 1
 
-        fun schedule(context: Context, force:Boolean){
+        fun schedule(context: Context, forceReschedule:Boolean){
             val jobScheduler = context.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
             val period = Preferences.getUpdatePeriod(context)
+            val wifiOnly = Preferences.getWifiOnly(context)
 
-            if(!force && jobScheduler.allPendingJobs.isNotEmpty()) {
+            if(!forceReschedule && jobScheduler.allPendingJobs.isNotEmpty()) {
                 DBG("Job is already scheduled")
                 return
             }
@@ -30,8 +31,15 @@ class SyncService : JobService() {
                 jobScheduler.cancel(JOB_ID)
                 DBG("Job was canceled")
             }else{
+                val networkType = if(wifiOnly) JobInfo.NETWORK_TYPE_UNMETERED else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        JobInfo.NETWORK_TYPE_NOT_ROAMING
+                    } else {
+                        JobInfo.NETWORK_TYPE_ANY
+                    }
+                }
                 val builder = JobInfo.Builder(JOB_ID, ComponentName(context, SyncService::class.java))
-                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setRequiredNetworkType(networkType)
                     .setPeriodic(period.millis)
                     .setPersisted(true)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -40,7 +48,7 @@ class SyncService : JobService() {
                 val result = jobScheduler.schedule(builder.build())
                 when (result) {
                     JobScheduler.RESULT_FAILURE -> DBG("Job was NOT scheduled")
-                    JobScheduler.RESULT_SUCCESS -> DBG("Job was successfully scheduled to '${period.getString(context)}'")
+                    JobScheduler.RESULT_SUCCESS -> DBG("Job was successfully scheduled to '${period.getString(context)}'"+(if(wifiOnly) " (wifi only)" else ""))
                 }
             }
         }

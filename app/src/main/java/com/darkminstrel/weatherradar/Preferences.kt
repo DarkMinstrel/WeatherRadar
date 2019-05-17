@@ -11,6 +11,7 @@ class Preferences {
 
         const val KEY_RADAR = "RADAR"
         const val KEY_PERIOD = "PERIOD"
+        const val KEY_WIFI_ONLY = "WIFI_ONLY"
 
         fun getUpdatePeriod(context: Context):Periods{
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -30,6 +31,16 @@ class Preferences {
         fun putRadar(context: Context, radars: Radars){
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             prefs.edit().putString(KEY_RADAR, radars.code).apply()
+        }
+
+        fun getWifiOnly(context: Context):Boolean{
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            return prefs.getBoolean(KEY_WIFI_ONLY, Config.DEFAULT_WIFI_ONLY)
+        }
+
+        fun putWifiOnly(context: Context, newValue:Boolean){
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            prefs.edit().putBoolean(KEY_WIFI_ONLY, newValue).apply()
         }
     }
 
