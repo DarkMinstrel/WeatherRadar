@@ -20,13 +20,13 @@ class SyncService : JobService() {
 
         fun schedule(context: Context, forceReschedule:Boolean){
             val jobScheduler = context.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-            val period = Preferences.getUpdatePeriod(context)
-            val wifiOnly = Preferences.getWifiOnly(context)
-
             if(!forceReschedule && jobScheduler.allPendingJobs.isNotEmpty()) {
                 DBG("Job is already scheduled")
                 return
             }
+
+            val period = Preferences.getUpdatePeriod(context)
+            val wifiOnly = Preferences.getWifiOnly(context)
             if(period==Periods.NONE) {
                 jobScheduler.cancel(JOB_ID)
                 DBG("Job was canceled")
