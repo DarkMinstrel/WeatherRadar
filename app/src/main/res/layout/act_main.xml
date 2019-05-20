@@ -40,10 +40,10 @@
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@drawable/shape_gradient_top_shadow"
-        app:layout_anchor="@id/bottom_sheet" />
+        app:layout_anchor="@id/legend" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/bottom_sheet"
+        android:id="@+id/legend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/bottom_sheet_behavior"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
-                android:id="@+id/bottom_sheet_container"
+                android:id="@+id/legend_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

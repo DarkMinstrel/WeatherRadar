@@ -12,9 +12,9 @@ class ViewMain(root: View) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)
     private val progress = root.findViewById<View>(R.id.progress)
     private val error = root.findViewById<View>(R.id.error)
-    private val bottomSheet = root.findViewById<View>(R.id.bottom_sheet)
-    private val bottomSheetShadow = root.findViewById<View>(R.id.shadow)
-    private val bottomSheerContainer = bottomSheet.findViewById<ViewGroup>(R.id.bottom_sheet_container)
+    private val legend = root.findViewById<View>(R.id.legend)
+    private val legendContainer = root.findViewById<ViewGroup>(R.id.legend_container)
+    private val bottomSheetShadow:View? = root.findViewById(R.id.shadow)
 
     init {
         fillLegend()
@@ -24,8 +24,8 @@ class ViewMain(root: View) {
         progress.visibility = View.VISIBLE
         error.visibility = View.GONE
         ivRadar.visibility = View.INVISIBLE
-        bottomSheet.visibility = View.INVISIBLE
-        bottomSheetShadow.visibility = View.INVISIBLE
+        legend.visibility = View.INVISIBLE
+        bottomSheetShadow?.visibility = View.INVISIBLE
     }
 
     fun setError(t:Throwable){
@@ -33,8 +33,8 @@ class ViewMain(root: View) {
         progress.visibility = View.GONE
         error.visibility = View.VISIBLE
         ivRadar.visibility = View.INVISIBLE
-        bottomSheet.visibility = View.INVISIBLE
-        bottomSheetShadow.visibility = View.INVISIBLE
+        legend.visibility = View.INVISIBLE
+        bottomSheetShadow?.visibility = View.INVISIBLE
     }
 
     fun setImage(bitmap: Bitmap){
@@ -43,8 +43,8 @@ class ViewMain(root: View) {
         error.visibility = View.GONE
         ivRadar.visibility = View.VISIBLE
         ivRadar.setImageBitmap(bitmap)
-        bottomSheet.visibility = View.VISIBLE
-        bottomSheetShadow.visibility = View.VISIBLE
+        legend.visibility = View.VISIBLE
+        bottomSheetShadow?.visibility = View.VISIBLE
         if(!wasVisible) {
             ivRadar.alpha = 0f
             ivRadar.animate().alpha(1f).start()
@@ -52,11 +52,11 @@ class ViewMain(root: View) {
     }
 
     private fun fillLegend(){
-        bottomSheerContainer.removeAllViews()
-        val inflater = LayoutInflater.from(bottomSheerContainer.context)
+        legendContainer.removeAllViews()
+        val inflater = LayoutInflater.from(legendContainer.context)
         for(type in WeatherType.values()){
-            val view = inflater.inflate(R.layout.legend_item, bottomSheerContainer, false)
-            bottomSheerContainer.addView(view)
+            val view = inflater.inflate(R.layout.legend_item, legendContainer, false)
+            legendContainer.addView(view)
             view.findViewById<TextView>(android.R.id.text1).setText(type.stringId)
             view.findViewById<View>(android.R.id.icon).setBackgroundColor(type.color)
         }
