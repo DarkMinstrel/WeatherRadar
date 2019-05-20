@@ -19,6 +19,9 @@ fun assertUiThread(){
     if(Thread.currentThread() != Looper.getMainLooper().thread) throw RuntimeException("assertUiThread() failed")
 }
 
+@Suppress("ConstantConditionIf", "FunctionName")
 fun DBG(s:Any?){
-    Log.d("RADARDBG", s.toString())
+    if(BuildConfig.DEBUG_FEATURES) {
+        Log.d("RADARDBG", s.toString())
+    }
 }

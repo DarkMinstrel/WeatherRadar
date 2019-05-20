@@ -51,9 +51,9 @@ class ActMain : AppCompatActivity() {
         super.onDestroy()
     }
 
-    @Suppress("unused")
+    @Suppress("unused", "RedundantVisibilityModifier")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventBackgroundUpdate(event: EventBackgroundUpdate){
+    public fun onEventBackgroundUpdate(event: EventBackgroundUpdate){
         DBG("onEventBackgroundUpdate")
         disposable?.dispose()
         view.setImage(event.pack.bitmap)

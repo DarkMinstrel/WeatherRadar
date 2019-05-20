@@ -18,9 +18,32 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
-    buildTypes {
+    signingConfigs {
         release {
+            def propsFile = new File("../../signing.properties")
+            if (!propsFile.exists()) propsFile = new File("../signing.properties")
+            if (propsFile.exists()) {
+                Properties props = new Properties()
+                props.load(new FileInputStream(propsFile))
+
+                if (props['keystore'] != null && !props['keystore'].isEmpty()) storeFile = file(props['keystore'])
+                else println("Keystore shouldn't be empty!")
+                keyAlias = props['keyAlias']
+                storePassword = props['keystore.password']
+                keyPassword = props['keyPassword']
+            } else println("Please provide signing credentials in " + propsFile.getAbsolutePath() + " file")
+        }
+    }
+    buildTypes {
+        debug {
             minifyEnabled false
+            buildConfigField "boolean", "DEBUG_FEATURES", "true"
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            buildConfigField "boolean", "DEBUG_FEATURES", "false"
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
