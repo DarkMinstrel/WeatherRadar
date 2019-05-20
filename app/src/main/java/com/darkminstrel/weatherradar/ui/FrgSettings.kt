@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -6,6 +6,9 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
+import com.darkminstrel.weatherradar.Preferences
+import com.darkminstrel.weatherradar.R
+import com.darkminstrel.weatherradar.SyncService
 import com.darkminstrel.weatherradar.data.Periods
 import com.darkminstrel.weatherradar.data.Radars
 

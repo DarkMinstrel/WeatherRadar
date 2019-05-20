@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.ui
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.darkminstrel.weatherradar.DBG
+import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.data.WeatherType
 
 class ViewMain(root: View) {

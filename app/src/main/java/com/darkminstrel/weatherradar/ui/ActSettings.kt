@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.ui
 
 import android.app.Activity
 import android.os.Bundle

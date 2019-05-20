@@ -11,6 +11,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.widget.RemoteViews
 import com.darkminstrel.weatherradar.rx.Storage
+import com.darkminstrel.weatherradar.ui.ActMain
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class WidgetProvider: AppWidgetProvider() {

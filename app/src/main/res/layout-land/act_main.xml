@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CCCCCC"
-    tools:context=".ActMain">
+    tools:context=".ui.ActMain">
 
     <TextView
         android:id="@+id/error"

@@ -1,10 +1,11 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.darkminstrel.weatherradar.*
 import com.darkminstrel.weatherradar.rx.getSyncSingle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -14,7 +15,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class ActMain : AppCompatActivity() {
 
-    private lateinit var view:ViewMain
+    private lateinit var view: ViewMain
     private var disposable:Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class ActMain : AppCompatActivity() {
 
     @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEventBackgroundUpdate(event:EventBackgroundUpdate){
+    fun onEventBackgroundUpdate(event: EventBackgroundUpdate){
         DBG("onEventBackgroundUpdate")
         disposable?.dispose()
         view.setImage(event.pack.bitmap)
