@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.ui
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
@@ -10,8 +10,10 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.widget.RemoteViews
+import com.darkminstrel.weatherradar.DBG
+import com.darkminstrel.weatherradar.R
+import com.darkminstrel.weatherradar.assertUiThread
 import com.darkminstrel.weatherradar.rx.Storage
-import com.darkminstrel.weatherradar.ui.ActMain
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class WidgetProvider: AppWidgetProvider() {

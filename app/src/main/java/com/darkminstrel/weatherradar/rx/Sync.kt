@@ -2,7 +2,7 @@ package com.darkminstrel.weatherradar.rx
 
 import android.content.Context
 import com.darkminstrel.weatherradar.Preferences
-import com.darkminstrel.weatherradar.WidgetProvider
+import com.darkminstrel.weatherradar.ui.WidgetProvider
 import com.darkminstrel.weatherradar.data.ContentPack
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
