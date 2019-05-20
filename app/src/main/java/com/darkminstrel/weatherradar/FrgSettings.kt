@@ -75,6 +75,7 @@ class FrgSettings : PreferenceFragmentCompat() {
         val radar = Preferences.getRadar(context)
         val period = Preferences.getUpdatePeriod(context)
         val wifiOnly = Preferences.getWifiOnly(context)
+        val updatesEnabled = period!=Periods.NONE
 
         listRadars.summary = getString(radar.cityId)
         listRadars.setValueIndex(Radars.values().indexOf(radar))
@@ -82,6 +83,7 @@ class FrgSettings : PreferenceFragmentCompat() {
         listPeriods.summary = period.getString(context)
         listPeriods.setValueIndex(Periods.values().indexOf(period))
 
+        cbWifiOnly.isEnabled = updatesEnabled
         cbWifiOnly.isChecked = wifiOnly
     }
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 enum class Periods(val millis:Long) {
         NONE(0),
         MIN30(TimeUnit.MINUTES.toMillis(30)),
-        MIN60(TimeUnit.MINUTES.toMillis(60)),
+        MIN60(TimeUnit.HOURS.toMillis(1)),
         HOUR1(TimeUnit.HOURS.toMillis(2)),
         HOUR2(TimeUnit.HOURS.toMillis(3)),
         HOUR3(TimeUnit.HOURS.toMillis(5))
@@ -26,7 +26,7 @@ enum class Periods(val millis:Long) {
         if(millis==0L) return context.getString(R.string.dont_update)
         val minutes = TimeUnit.MILLISECONDS.toMinutes(millis).toInt()
         val hours = minutes/60
-        return if(minutes>60){
+        return if(hours>0){
             String.format(context.resources.getQuantityString(R.plurals.hours, hours, hours))
         }else{
             String.format(context.resources.getQuantityString(R.plurals.minutes, minutes, minutes))
