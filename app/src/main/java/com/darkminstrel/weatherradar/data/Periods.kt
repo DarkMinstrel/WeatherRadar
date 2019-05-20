@@ -17,7 +17,7 @@ enum class Periods(val millis:Long) {
 
     companion object {
         fun findByMillis(millis:Long):Periods{
-            for(period in Periods.values()) if(period.millis == millis) return period
+            for(period in values()) if(period.millis == millis) return period
             throw RuntimeException("Unknown period")
         }
     }
