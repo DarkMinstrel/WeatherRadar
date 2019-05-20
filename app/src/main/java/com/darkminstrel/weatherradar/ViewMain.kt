@@ -38,14 +38,17 @@ class ViewMain(root: View) {
     }
 
     fun setImage(bitmap: Bitmap){
+        val wasVisible = (ivRadar.visibility==View.VISIBLE)
         progress.visibility = View.GONE
         error.visibility = View.GONE
         ivRadar.visibility = View.VISIBLE
         ivRadar.setImageBitmap(bitmap)
         bottomSheet.visibility = View.VISIBLE
         bottomSheetShadow.visibility = View.VISIBLE
-        ivRadar.alpha = 0f
-        ivRadar.animate().alpha(1f).start()
+        if(!wasVisible) {
+            ivRadar.alpha = 0f
+            ivRadar.animate().alpha(1f).start()
+        }
     }
 
     private fun fillLegend(){

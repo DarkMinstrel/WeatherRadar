@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.darkminstrel.weatherradar.rx.getSyncSingle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class ActMain : AppCompatActivity() {
 
@@ -19,21 +22,8 @@ class ActMain : AppCompatActivity() {
         setContentView(R.layout.act_main)
         view = ViewMain(findViewById(android.R.id.content))
         SyncService.schedule(this, false)
+        EventBus.getDefault().register(this)
         reload()
-    }
-
-    private fun reload(){
-        val radar = Preferences.getRadar(this)
-        val title = String.format("%s %s", getString(R.string.app_name), getString(radar.cityId))
-        setTitle(title)
-
-        view.setProgress()
-        disposable?.dispose()
-        disposable = getSyncSingle(this)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {pack->view.setImage(pack.bitmap)},
-                {error->view.setError(error)})
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,7 +45,31 @@ class ActMain : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
         disposable?.dispose()
         super.onDestroy()
     }
+
+    @Suppress("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventBackgroundUpdate(event:EventBackgroundUpdate){
+        DBG("onEventBackgroundUpdate")
+        disposable?.dispose()
+        view.setImage(event.pack.bitmap)
+    }
+
+    private fun reload(){
+        val radar = Preferences.getRadar(this)
+        val title = String.format("%s %s", getString(R.string.app_name), getString(radar.cityId))
+        setTitle(title)
+
+        view.setProgress()
+        disposable?.dispose()
+        disposable = getSyncSingle(this)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {pack->view.setImage(pack.bitmap)},
+                {error->view.setError(error)})
+    }
+
 }

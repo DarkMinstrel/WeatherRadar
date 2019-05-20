@@ -11,6 +11,9 @@ import android.app.job.JobScheduler
 import android.content.Context
 import android.os.Build
 import com.darkminstrel.weatherradar.data.Periods
+import org.greenrobot.eventbus.EventBus
+
+
 
 class SyncService : JobService() {
 
@@ -62,7 +65,10 @@ class SyncService : JobService() {
         disposable = getSyncSingle(applicationContext)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {pack -> onJobFinished(params, null)},
+                {pack ->
+                    EventBus.getDefault().post(EventBackgroundUpdate(pack))
+                    onJobFinished(params, null)
+                },
                 {error -> onJobFinished(params, error)})
         return true //job hasn't finished yet
     }
@@ -77,5 +83,4 @@ class SyncService : JobService() {
         disposable?.dispose()
         return false //don't reschedule
     }
-
 }
