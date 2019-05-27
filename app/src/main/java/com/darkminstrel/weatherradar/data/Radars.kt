@@ -6,6 +6,7 @@ import java.lang.RuntimeException
 
 enum class Radars(val code:String, @StringRes val cityId:Int) {
     KIEV("UKBB", R.string.city_kiev),
+    ZP("UKDE", R.string.city_zp),
     MINSK("UMMN", R.string.city_minsk),
     BREST("UMBB", R.string.city_brest),
     HOMEL("UMGG", R.string.city_homel),
