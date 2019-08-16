@@ -3,6 +3,7 @@ package com.darkminstrel.weatherradar.rx
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import androidx.annotation.WorkerThread
 import com.darkminstrel.weatherradar.assertWorkerThread
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -12,6 +13,7 @@ class Storage {
     companion object{
         private val FN = "radar.png"
 
+        @WorkerThread
         private fun writeImpl(context: Context, bitmap: Bitmap){
             assertWorkerThread()
             synchronized(FN){
@@ -21,6 +23,7 @@ class Storage {
             }
         }
 
+        @WorkerThread
         private fun readImpl(context:Context):Bitmap {
             assertWorkerThread()
             synchronized(FN) {

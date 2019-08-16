@@ -2,25 +2,22 @@ package com.darkminstrel.weatherradar.data
 
 import android.graphics.*
 import android.graphics.Typeface.create
+import androidx.annotation.WorkerThread
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.assertWorkerThread
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class ContentPack(ts:String, rawBitmap: Bitmap) {
-
+@WorkerThread
+class TimedBitmap(ts:Long, rawBitmap: Bitmap) {
     val bitmap:Bitmap
-    val types:Map<WeatherType, Int>
-    val millis:Long
+    val ts:Long
 
     init{
         assertWorkerThread()
+        this.ts = ts
         this.bitmap = cropBitmap(rawBitmap)
-        this.types = WeatherType.collectColors(this.bitmap)
-        this.millis = ts.toLong()*1000
-        drawTime(bitmap, millis)
-        DBG(types)
+        drawTime(bitmap, ts*1000)
     }
 
     companion object {

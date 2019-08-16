@@ -3,6 +3,11 @@ package com.darkminstrel.weatherradar
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class Stopwatch(){
     private val tsStarted = SystemClock.elapsedRealtime()
@@ -18,6 +23,10 @@ fun assertWorkerThread(){
 fun assertUiThread(){
     if(Thread.currentThread() != Looper.getMainLooper().thread) throw RuntimeException("assertUiThread() failed")
 }
+
+fun <T> Single<T>.ioMain() = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+fun <T> Observable<T>.ioMain() = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+fun Completable.ioMain() = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
 @Suppress("ConstantConditionIf", "FunctionName")
 fun DBG(s:Any?){

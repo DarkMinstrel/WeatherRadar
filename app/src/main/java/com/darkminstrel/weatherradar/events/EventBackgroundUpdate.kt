@@ -1,5 +1,5 @@
 package com.darkminstrel.weatherradar.events
 
-import com.darkminstrel.weatherradar.data.ContentPack
+import com.darkminstrel.weatherradar.data.TimedBitmap
 
-class EventBackgroundUpdate(val pack:ContentPack)
+class EventBackgroundUpdate(val timedBitmap:TimedBitmap)

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.darkminstrel.weatherradar.*
 import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
 import com.darkminstrel.weatherradar.rx.getSyncSingle
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -59,7 +58,7 @@ class ActMain : AppCompatActivity() {
     public fun onEventBackgroundUpdate(event: EventBackgroundUpdate){
         DBG("onEventBackgroundUpdate")
         disposable?.dispose()
-        view?.setImage(event.pack.bitmap)
+        view?.setImage(event.timedBitmap.bitmap)
     }
 
     private fun reload(){
@@ -70,7 +69,7 @@ class ActMain : AppCompatActivity() {
         view?.setProgress()
         disposable?.dispose()
         disposable = getSyncSingle(this)
-            .observeOn(AndroidSchedulers.mainThread())
+            .ioMain()
             .subscribe(
                 {pack->view?.setImage(pack.bitmap)},
                 {error->view?.setError(error)})
