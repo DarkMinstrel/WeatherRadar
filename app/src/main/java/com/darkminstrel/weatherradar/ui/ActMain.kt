@@ -36,6 +36,9 @@ class ActMain : AppCompatActivity() {
         if(item.itemId == R.id.menu_settings){
             startActivityForResult(Intent(this, ActSettings::class.java), 1)
             return true
+        }else if(item.itemId == R.id.menu_legend){
+            view?.expandLegend()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }

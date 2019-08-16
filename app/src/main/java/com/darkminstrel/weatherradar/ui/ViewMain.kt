@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.data.WeatherType
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class ViewMain(root: View) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)
@@ -62,5 +63,10 @@ class ViewMain(root: View) {
             view.findViewById<TextView>(android.R.id.text1).setText(type.stringId)
             view.findViewById<View>(android.R.id.icon).setBackgroundColor(type.color)
         }
+    }
+
+    fun expandLegend(){
+        val behavior = BottomSheetBehavior.from(legend)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 }

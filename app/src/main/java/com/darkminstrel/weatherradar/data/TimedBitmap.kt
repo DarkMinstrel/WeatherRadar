@@ -17,6 +17,7 @@ class TimedBitmap(ts:Long, rawBitmap: Bitmap) {
         assertWorkerThread()
         this.ts = ts
         this.bitmap = cropBitmap(rawBitmap)
+        rawBitmap.recycle()
         drawTime(bitmap, ts*1000)
     }
 

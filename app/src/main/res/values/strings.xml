@@ -4,6 +4,7 @@
 
     <string name="app_name">Метеорадар</string>
     <string name="settings">Настройки</string>
+    <string name="legend">Легенда</string>
 
     <string name="radar">Радар</string>
     <string name="background_updates">Фоновое обновление</string>
