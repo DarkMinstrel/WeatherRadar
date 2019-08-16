@@ -11,6 +11,7 @@ import android.app.job.JobScheduler
 import android.content.Context
 import android.os.Build
 import com.darkminstrel.weatherradar.data.Periods
+import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
 import org.greenrobot.eventbus.EventBus
 
 

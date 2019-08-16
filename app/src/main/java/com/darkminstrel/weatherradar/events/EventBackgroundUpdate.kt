@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar
+package com.darkminstrel.weatherradar.events
 
 import com.darkminstrel.weatherradar.data.ContentPack
 

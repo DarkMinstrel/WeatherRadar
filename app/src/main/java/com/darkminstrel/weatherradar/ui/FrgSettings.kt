@@ -27,7 +27,7 @@ class FrgSettings : PreferenceFragmentCompat() {
         listRadars.key = Preferences.KEY_RADAR
         listRadars.title = getString(R.string.radar)
         listRadars.isIconSpaceReserved = false
-        listRadars.entries = Radars.values().map {getString(it.cityId)}.toTypedArray()
+        listRadars.entries = Radars.values().map {it.getCity(context)}.toTypedArray()
         listRadars.entryValues = Radars.values().map { it.code }.toTypedArray()
         listRadars.setOnPreferenceChangeListener { preference, newValue ->
             val newRadar = Radars.findByCode(newValue as String)
@@ -80,7 +80,7 @@ class FrgSettings : PreferenceFragmentCompat() {
         val wifiOnly = Preferences.getWifiOnly(context)
         val updatesEnabled = period!=Periods.NONE
 
-        listRadars.summary = getString(radar.cityId)
+        listRadars.summary = radar.getCity(context)
         listRadars.setValueIndex(Radars.values().indexOf(radar))
 
         listPeriods.summary = period.getString(context)

@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.darkminstrel.weatherradar.*
+import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
 import com.darkminstrel.weatherradar.rx.getSyncSingle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -15,7 +16,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class ActMain : AppCompatActivity() {
 
-    private lateinit var view: ViewMain
+    private var view: ViewMain? = null
     private var disposable:Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,8 @@ class ActMain : AppCompatActivity() {
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         disposable?.dispose()
+        disposable = null
+        view = null
         super.onDestroy()
     }
 
@@ -56,21 +59,21 @@ class ActMain : AppCompatActivity() {
     public fun onEventBackgroundUpdate(event: EventBackgroundUpdate){
         DBG("onEventBackgroundUpdate")
         disposable?.dispose()
-        view.setImage(event.pack.bitmap)
+        view?.setImage(event.pack.bitmap)
     }
 
     private fun reload(){
         val radar = Preferences.getRadar(this)
-        val title = String.format("%s %s", getString(R.string.app_name), getString(radar.cityId))
+        val title = String.format("%s %s", getString(R.string.app_name), radar.getCity(this))
         setTitle(title)
 
-        view.setProgress()
+        view?.setProgress()
         disposable?.dispose()
         disposable = getSyncSingle(this)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {pack->view.setImage(pack.bitmap)},
-                {error->view.setError(error)})
+                {pack->view?.setImage(pack.bitmap)},
+                {error->view?.setError(error)})
     }
 
 }

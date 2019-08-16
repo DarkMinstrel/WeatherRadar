@@ -1,10 +1,11 @@
 package com.darkminstrel.weatherradar.data
 
+import android.content.Context
 import androidx.annotation.StringRes
 import com.darkminstrel.weatherradar.R
 import java.lang.RuntimeException
 
-enum class Radars(val code:String, @StringRes val cityId:Int) {
+enum class Radars(val code:String, @StringRes private val cityId:Int) {
     KIEV("UKBB", R.string.city_kiev),
     ZP("UKDE", R.string.city_zp),
     MINSK("UMMN", R.string.city_minsk),
@@ -17,5 +18,7 @@ enum class Radars(val code:String, @StringRes val cityId:Int) {
             throw RuntimeException("Unknown radar code")
         }
     }
-
+    fun getCity(context: Context):String{
+        return context.getString(this.cityId)
+    }
 }
