@@ -1,6 +1,4 @@
-<resources
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="TypographyDashes">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes,MissingTranslation">
 
     <string name="app_name">Метеорадар</string>
     <string name="settings">Настройки</string>
@@ -38,13 +36,9 @@
     <string name="city_homel">Гомель</string>
 
     <plurals name="hours">
-        <item quantity="one">%d час</item>
-        <item quantity="few">%d часа</item>
-        <item quantity="other">%d часов</item>
+        <item quantity="other">%d ч.</item>
     </plurals>
     <plurals name="minutes">
-        <item quantity="one">%d минута</item>
-        <item quantity="few">%d минуты</item>
-        <item quantity="other">%d минут</item>
+        <item quantity="other">%d мин.</item>
     </plurals>
 </resources>
