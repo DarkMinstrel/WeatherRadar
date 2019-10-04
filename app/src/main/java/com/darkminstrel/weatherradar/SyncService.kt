@@ -1,18 +1,16 @@
 package com.darkminstrel.weatherradar
 
-import android.app.job.JobParameters
-import android.app.job.JobService
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import android.app.job.JobInfo
-import android.content.ComponentName
+import android.app.job.JobParameters
 import android.app.job.JobScheduler
+import android.app.job.JobService
+import android.content.ComponentName
 import android.content.Context
 import android.os.Build
 import com.darkminstrel.weatherradar.data.UpdatePeriod
-import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
-import org.greenrobot.eventbus.EventBus
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 
 class SyncService : JobService() {
@@ -65,7 +63,6 @@ class SyncService : JobService() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {pack ->
-                    EventBus.getDefault().post(EventBackgroundUpdate(pack))
                     onJobFinished(params, null)
                 },
                 {error -> onJobFinished(params, error)})

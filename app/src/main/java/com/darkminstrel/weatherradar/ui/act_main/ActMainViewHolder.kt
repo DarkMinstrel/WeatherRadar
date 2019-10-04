@@ -11,7 +11,7 @@ import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.data.WeatherType
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-class ViewMain(root: View) {
+class ActMainViewHolder(root: View) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)
     private val progress = root.findViewById<View>(R.id.progress)
     private val error = root.findViewById<View>(R.id.error)

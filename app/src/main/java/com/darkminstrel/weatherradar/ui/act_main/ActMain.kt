@@ -5,32 +5,33 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.darkminstrel.weatherradar.*
-import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
-import com.darkminstrel.weatherradar.repository.Prefs
+import androidx.lifecycle.Observer
+import com.darkminstrel.weatherradar.DBG
+import com.darkminstrel.weatherradar.R
+import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.ui.act_settings.ActSettings
-import com.darkminstrel.weatherradar.usecases.UsecaseSync
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.getViewModel
 
 class ActMain : AppCompatActivity() {
 
-    private var view: ViewMain? = null
-    private var disposable:Disposable? = null
-    private val prefs: Prefs by inject()
-    private val usecaseSync:UsecaseSync by inject()
+    private var vh: ActMainViewHolder? = null
+    private lateinit var vm: ActMainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main)
-        view = ViewMain(findViewById(android.R.id.content))
-        SyncService.schedule(this, prefs.getUpdatePeriod(), prefs.wifiOnly, false)
-        EventBus.getDefault().register(this)
-        reload()
+        vh = ActMainViewHolder(findViewById(android.R.id.content))
+
+        vm = getViewModel()
+        vm.getLiveDataTitle().observe(this, Observer(this::setTitle))
+        vm.getLiveDataBitmap().observe(this, Observer {
+            when(it){
+                is DataHolder.Success -> vh?.setImage(it.value.bitmap)
+                is DataHolder.Error -> vh?.setError(it.error)
+                else -> vh?.setProgress()
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,7 +44,7 @@ class ActMain : AppCompatActivity() {
             startActivityForResult(Intent(this, ActSettings::class.java), 1)
             return true
         }else if(item.itemId == R.id.menu_legend){
-            view?.expandLegend()
+            vh?.expandLegend()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -51,37 +52,12 @@ class ActMain : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        reload()
+        vm.reload()
     }
 
     override fun onDestroy() {
-        EventBus.getDefault().unregister(this)
-        disposable?.dispose()
-        disposable = null
-        view = null
+        vh = null
         super.onDestroy()
-    }
-
-    @Suppress("unused", "RedundantVisibilityModifier")
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public fun onEventBackgroundUpdate(event: EventBackgroundUpdate){
-        DBG("onEventBackgroundUpdate")
-        disposable?.dispose()
-        view?.setImage(event.timedBitmap.bitmap)
-    }
-
-    private fun reload(){
-        val radar = prefs.getRadar()
-        val title = String.format("%s %s", getString(R.string.app_name), radar.getCity(this))
-        setTitle(title)
-
-        view?.setProgress()
-        disposable?.dispose()
-        disposable = usecaseSync.getSyncSingle()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {pack->view?.setImage(pack.bitmap)},
-                {error->view?.setError(error)})
     }
 
 }

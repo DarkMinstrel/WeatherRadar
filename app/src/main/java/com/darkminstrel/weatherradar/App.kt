@@ -4,9 +4,12 @@ import android.app.Application
 import com.darkminstrel.weatherradar.repository.Api
 import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.repository.Storage
+import com.darkminstrel.weatherradar.ui.act_main.ActMainViewModel
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
+import org.koin.android.experimental.dsl.viewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -28,6 +31,7 @@ class App:Application() {
             factory{ UsecaseSync(get(), get(), get(), get()) }
         }
         val vmModule = module {
+            viewModel{ ActMainViewModel(get(), get(), get()) }
         }
 
         return startKoin {
