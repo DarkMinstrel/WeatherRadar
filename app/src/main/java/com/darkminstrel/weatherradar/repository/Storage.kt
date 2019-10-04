@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar.rx
+package com.darkminstrel.weatherradar.repository
 
 import android.content.Context
 import android.graphics.Bitmap

@@ -2,7 +2,6 @@ package com.darkminstrel.weatherradar
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import com.darkminstrel.weatherradar.rx.getSyncSingle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import android.app.job.JobInfo
@@ -10,11 +9,11 @@ import android.content.ComponentName
 import android.app.job.JobScheduler
 import android.content.Context
 import android.os.Build
-import com.darkminstrel.weatherradar.data.Periods
+import com.darkminstrel.weatherradar.data.UpdatePeriod
 import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
+import com.darkminstrel.weatherradar.usecases.UsecaseSync
 import org.greenrobot.eventbus.EventBus
-
-
+import org.koin.android.ext.android.inject
 
 class SyncService : JobService() {
 
@@ -22,16 +21,14 @@ class SyncService : JobService() {
 
         private const val JOB_ID = 1
 
-        fun schedule(context: Context, forceReschedule:Boolean){
+        fun schedule(context: Context, period:UpdatePeriod, wifiOnly:Boolean, forceReschedule:Boolean){
             val jobScheduler = context.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
             if(!forceReschedule && jobScheduler.allPendingJobs.isNotEmpty()) {
                 DBG("Job is already scheduled")
                 return
             }
 
-            val period = Preferences.getUpdatePeriod(context)
-            val wifiOnly = Preferences.getWifiOnly(context)
-            if(period==Periods.NONE) {
+            if(period==UpdatePeriod.NONE) {
                 jobScheduler.cancel(JOB_ID)
                 DBG("Job was canceled")
             }else{
@@ -59,11 +56,12 @@ class SyncService : JobService() {
     }
 
     private var disposable:Disposable? = null
+    private val usecaseSync:UsecaseSync by inject()
 
     override fun onStartJob(params: JobParameters): Boolean {
         DBG("Job started")
         disposable?.dispose()
-        disposable = getSyncSingle(applicationContext)
+        disposable = usecaseSync.getSyncSingle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {pack ->
@@ -82,6 +80,7 @@ class SyncService : JobService() {
 
     override fun onStopJob(params: JobParameters?): Boolean {
         disposable?.dispose()
+        disposable = null
         return false //don't reschedule
     }
 }

@@ -7,22 +7,27 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.darkminstrel.weatherradar.*
 import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
-import com.darkminstrel.weatherradar.rx.getSyncSingle
+import com.darkminstrel.weatherradar.repository.Prefs
+import com.darkminstrel.weatherradar.usecases.UsecaseSync
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.koin.android.ext.android.inject
 
 class ActMain : AppCompatActivity() {
 
     private var view: ViewMain? = null
     private var disposable:Disposable? = null
+    private val prefs: Prefs by inject()
+    private val usecaseSync:UsecaseSync by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main)
         view = ViewMain(findViewById(android.R.id.content))
-        SyncService.schedule(this, false)
+        SyncService.schedule(this, prefs.getUpdatePeriod(), prefs.wifiOnly, false)
         EventBus.getDefault().register(this)
         reload()
     }
@@ -65,14 +70,14 @@ class ActMain : AppCompatActivity() {
     }
 
     private fun reload(){
-        val radar = Preferences.getRadar(this)
+        val radar = prefs.getRadar()
         val title = String.format("%s %s", getString(R.string.app_name), radar.getCity(this))
         setTitle(title)
 
         view?.setProgress()
         disposable?.dispose()
-        disposable = getSyncSingle(this)
-            .ioMain()
+        disposable = usecaseSync.getSyncSingle()
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {pack->view?.setImage(pack.bitmap)},
                 {error->view?.setError(error)})

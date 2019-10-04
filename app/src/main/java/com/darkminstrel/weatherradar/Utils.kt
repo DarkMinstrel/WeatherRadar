@@ -24,10 +24,6 @@ fun assertUiThread(){
     if(Thread.currentThread() != Looper.getMainLooper().thread) throw RuntimeException("assertUiThread() failed")
 }
 
-fun <T> Single<T>.ioMain() = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-fun <T> Observable<T>.ioMain() = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-fun Completable.ioMain() = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-
 @Suppress("ConstantConditionIf", "FunctionName")
 fun DBG(s:Any?){
     if(BuildConfig.DEBUG_FEATURES) {

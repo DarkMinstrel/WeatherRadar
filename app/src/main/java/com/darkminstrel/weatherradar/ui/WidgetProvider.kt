@@ -13,7 +13,7 @@ import android.widget.RemoteViews
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.assertUiThread
-import com.darkminstrel.weatherradar.rx.Storage
+import com.darkminstrel.weatherradar.repository.Storage
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class WidgetProvider: AppWidgetProvider() {

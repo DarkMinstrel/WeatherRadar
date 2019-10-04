@@ -5,7 +5,7 @@ import com.darkminstrel.weatherradar.R
 import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 
-enum class Periods(val millis:Long) {
+enum class UpdatePeriod(val millis:Long) {
         NONE(0),
         MIN30(TimeUnit.MINUTES.toMillis(30)),
         MIN60(TimeUnit.HOURS.toMillis(1)),
@@ -16,7 +16,7 @@ enum class Periods(val millis:Long) {
 
 
     companion object {
-        fun findByMillis(millis:Long):Periods{
+        fun findByMillis(millis:Long):UpdatePeriod{
             for(period in values()) if(period.millis == millis) return period
             throw RuntimeException("Unknown period")
         }
