@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar.ui
+package com.darkminstrel.weatherradar.ui.act_main
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.darkminstrel.weatherradar.*
 import com.darkminstrel.weatherradar.events.EventBackgroundUpdate
 import com.darkminstrel.weatherradar.repository.Prefs
+import com.darkminstrel.weatherradar.ui.act_settings.ActSettings
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

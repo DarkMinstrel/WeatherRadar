@@ -14,15 +14,20 @@ import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.assertUiThread
 import com.darkminstrel.weatherradar.repository.Storage
+import com.darkminstrel.weatherradar.ui.act_main.ActMain
 import io.reactivex.android.schedulers.AndroidSchedulers
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class WidgetProvider: AppWidgetProvider() {
+class WidgetProvider: AppWidgetProvider(), KoinComponent {
+
+    private val storage:Storage by inject()
 
     @SuppressLint("CheckResult")
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         if(appWidgetIds.isNotEmpty()){
             DBG("Updating widget")
-            Storage.read(context)
+            storage.read()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe (
                     {bitmap -> updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)},

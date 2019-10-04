@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar.ui
+package com.darkminstrel.weatherradar.ui.act_main
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater

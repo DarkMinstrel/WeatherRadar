@@ -23,6 +23,13 @@ fun assertWorkerThread(){
 fun assertUiThread(){
     if(Thread.currentThread() != Looper.getMainLooper().thread) throw RuntimeException("assertUiThread() failed")
 }
+fun assertComputationScheduler() {
+    if (BuildConfig.DEBUG_FEATURES && !Thread.currentThread().name.startsWith("RxComputationThreadPool")) throw RuntimeException("assertComputationScheduler() failed")
+}
+
+fun assertIoScheduler() {
+    if (BuildConfig.DEBUG_FEATURES && !Thread.currentThread().name.startsWith("RxCachedThreadScheduler")) throw RuntimeException("assertIoScheduler() failed")
+}
 
 @Suppress("ConstantConditionIf", "FunctionName")
 fun DBG(s:Any?){

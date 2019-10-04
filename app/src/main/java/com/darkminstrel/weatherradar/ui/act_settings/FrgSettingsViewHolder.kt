@@ -1,4 +1,4 @@
-package com.darkminstrel.weatherradar.ui.frg_settings
+package com.darkminstrel.weatherradar.ui.act_settings
 
 import android.content.Context
 import androidx.preference.*

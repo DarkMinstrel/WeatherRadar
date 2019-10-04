@@ -1,6 +1,7 @@
 package com.darkminstrel.weatherradar.repository
 
 import android.graphics.BitmapFactory
+import com.darkminstrel.weatherradar.assertIoScheduler
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -13,10 +14,10 @@ private const val URL_IMAGE = "http://www.meteoinfo.by/radar/%s/%s_%d.png"
 private const val SLIDESHOW_ITEMS = 10
 private const val SLIDESHOW_PERIOD = 600 //seconds
 
-
 class Api {
     private fun download(url:String): Single<ResponseBody> {
         return Single.create {
+            assertIoScheduler()
             val client = OkHttpClient()
             val request = Request.Builder().url(url).build()
             client.newCall(request).enqueue(object:Callback{
@@ -57,9 +58,10 @@ class Api {
     fun getImage(radar: String, ts:Long): Single<TimedBitmap>{
         val url = String.format(URL_IMAGE, radar, radar, ts)
         return download(url)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.computation())
             .map {body -> BitmapFactory.decodeStream(body.byteStream()) }
             .map {bitmap -> TimedBitmap(ts,bitmap)}
-            .subscribeOn(Schedulers.io())
     }
 
     fun getSlideshow(radar: String, ts:Long):Single<List<TimedBitmap>>{
