@@ -1,8 +1,6 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
 
 android {
     compileSdkVersion 28
@@ -26,11 +24,11 @@ android {
                 Properties props = new Properties()
                 props.load(new FileInputStream(propsFile))
 
-                if (props['keystore'] != null && !props['keystore'].isEmpty()) storeFile = file(props['keystore'])
+                if (props["keystore"] != null && !props["keystore"].isEmpty()) storeFile = file(props["keystore"])
                 else println("Keystore shouldn't be empty!")
-                keyAlias = props['keyAlias']
-                storePassword = props['keystore.password']
-                keyPassword = props['keyPassword']
+                keyAlias = props["keyAlias"]
+                storePassword = props["keystore.password"]
+                keyPassword = props["keyPassword"]
             } else println("Please provide signing credentials in " + propsFile.getAbsolutePath() + " file")
         }
     }
@@ -44,38 +42,39 @@ android {
             shrinkResources true
             buildConfigField "boolean", "DEBUG_FEATURES", "false"
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.preference:preference:1.1.0'
-    implementation 'androidx.preference:preference-ktx:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha10'
-    implementation 'com.jsibbold:zoomage:1.2.0'
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.preference:preference:1.1.0"
+    implementation "androidx.preference:preference-ktx:1.1.0"
+    implementation "com.google.android.material:material:1.1.0-alpha10"
+    implementation "com.jsibbold:zoomage:1.2.0"
 
     //okhttp
-    implementation 'com.squareup.okhttp3:okhttp:4.0.0-alpha01'
-    implementation 'com.squareup.okio:okio:2.2.2'
+    implementation "com.squareup.okhttp3:okhttp:4.0.0-alpha01"
+    implementation "com.squareup.okio:okio:2.2.2"
 
     //rxjava2
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
 
     //koin
-    def koin_version = '2.0.1'
+    def koin_version = "2.0.1"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //test
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 }
