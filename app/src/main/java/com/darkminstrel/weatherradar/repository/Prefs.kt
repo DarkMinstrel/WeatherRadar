@@ -42,7 +42,7 @@ class Prefs(context: Context){
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: String?) = prefs.edit().putString(key, value).apply()
     }
     private inner class StringPref(private val key:String, private val defaultValue: String) : ReadWriteProperty<Any?, String> {
-        override fun getValue(thisRef: Any?, property: KProperty<*>): String = prefs.getString(key, defaultValue)!!
+        override fun getValue(thisRef: Any?, property: KProperty<*>): String = prefs.getString(key, defaultValue)?:defaultValue
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: String) = prefs.edit().putString(key, value).apply()
     }
 }
