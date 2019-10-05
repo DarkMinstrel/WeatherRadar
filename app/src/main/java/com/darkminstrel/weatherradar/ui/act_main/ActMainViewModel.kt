@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.SyncService
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
@@ -32,7 +31,7 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
 
     fun reload(){
         val radar = prefs.getRadar()
-        liveDataTitle.value = String.format("%s %s", context.getString(R.string.app_name), radar.getCity(context))
+        liveDataTitle.value = radar.getCity(context)
         liveDataBitmap.value = null
         liveDataSlideshow.value = null
 

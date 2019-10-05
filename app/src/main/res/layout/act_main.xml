@@ -44,6 +44,7 @@
             app:layout_anchor="@+id/legend"
             app:layout_anchorGravity="bottom|end"
             app:layout_dodgeInsetEdges="bottom"
+            app:mode="playToStop"
             />
 
     <View

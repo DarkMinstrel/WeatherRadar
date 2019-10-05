@@ -18,13 +18,12 @@ class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgr
     fun init(){
         vhFab.hide(false)
         vhFab.setOnClickListener(null)
-        vhFab.setIdle()
     }
 
     fun setSlideshow(slideshow:List<TimedBitmap>?){
         slideshowAnimator?.stop()
         slideshowAnimator = null
-        animateProgress(null)
+        animateProgressbar(null)
         if(slideshow==null) {
             vhFab.hide(true)
             vhFab.setOnClickListener(null)
@@ -52,11 +51,11 @@ class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgr
         private var index = 0
         fun start(){
             runnable.run()
-            animateProgress((slideshow.size) * Config.ANIMATION_PERIOD)
+            animateProgressbar((slideshow.size) * Config.ANIMATION_PERIOD)
         }
         fun stop(){
             imageEater.invoke(slideshow.last().bitmap)
-            animateProgress(null)
+            animateProgressbar(null)
             handler.removeCallbacks(runnable)
         }
         private val runnable = object:Runnable {
@@ -74,7 +73,7 @@ class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgr
     }
 
     @Suppress("UsePropertyAccessSyntax")
-    private fun animateProgress(duration:Long?){
+    private fun animateProgressbar(duration:Long?){
         progressAnimator?.cancel()
         if(duration!=null){
             slideProgress.visibility = View.VISIBLE
