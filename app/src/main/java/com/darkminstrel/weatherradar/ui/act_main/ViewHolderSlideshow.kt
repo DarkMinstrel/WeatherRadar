@@ -11,15 +11,12 @@ import com.darkminstrel.weatherradar.data.TimedBitmap
 
 class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgress:ProgressBar, private val imageEater:(bitmap:Bitmap)->Unit) {
 
-    private val vhFab = ViewHolderFab(fab)
+    private val vhFab = ViewHolderFab(fab).apply {
+        setIdle()
+        hide(false)
+    }
     private var slideshowAnimator:Animator? = null
     private var progressAnimator: ObjectAnimator? = null
-
-    fun init(){
-        vhFab.setIdle()
-        vhFab.hide(false)
-        vhFab.setOnClickListener(null)
-    }
 
     fun setSlideshow(slideshow:List<TimedBitmap>?){
         slideshowAnimator?.stop()

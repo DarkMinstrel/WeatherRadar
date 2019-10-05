@@ -31,7 +31,6 @@ class ActMainViewHolder(root: View, vm:ActMainViewModel) {
 
     init {
         fillLegend()
-        vhSlideshow.init()
     }
 
     fun setProgress(){

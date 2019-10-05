@@ -80,7 +80,6 @@
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
         android:src="@drawable/ic_settings"
-        app:mode="playToStop"
         />
 
 </FrameLayout>
