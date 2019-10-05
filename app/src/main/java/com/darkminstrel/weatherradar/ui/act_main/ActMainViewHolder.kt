@@ -80,9 +80,13 @@ class ActMainViewHolder(root: View, vm:ActMainViewModel) {
         }
     }
 
-    fun expandLegend(){
+    fun toggleLegend(){
         val behavior = BottomSheetBehavior.from(legend)
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        if(behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }else{
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
     }
 
 

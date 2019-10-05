@@ -45,7 +45,7 @@ class ActMain : AppCompatActivity() {
             startActivityForResult(Intent(this, ActSettings::class.java), 1)
             return true
         }else if(item.itemId == R.id.menu_legend){
-            vh?.expandLegend()
+            vh?.toggleLegend()
             return true
         }
         return super.onOptionsItemSelected(item)
