@@ -3,7 +3,6 @@ package com.darkminstrel.weatherradar.data
 import android.content.Context
 import androidx.annotation.StringRes
 import com.darkminstrel.weatherradar.R
-import java.lang.RuntimeException
 
 enum class Radar(val code:String, @StringRes private val cityId:Int) {
     KIEV("UKBB", R.string.city_kiev),

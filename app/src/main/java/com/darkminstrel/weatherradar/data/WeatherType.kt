@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.Stopwatch
 import com.darkminstrel.weatherradar.assertComputationScheduler
-import com.darkminstrel.weatherradar.assertWorkerThread
 import java.util.*
 
 enum class WeatherType(@StringRes val stringId:Int, val color:Int) {

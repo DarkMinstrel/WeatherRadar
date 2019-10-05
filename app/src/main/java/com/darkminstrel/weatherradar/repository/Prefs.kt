@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.darkminstrel.weatherradar.Config
-import com.darkminstrel.weatherradar.data.UpdatePeriod
 import com.darkminstrel.weatherradar.data.Radar
+import com.darkminstrel.weatherradar.data.UpdatePeriod
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 

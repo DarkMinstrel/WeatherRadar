@@ -2,7 +2,6 @@ package com.darkminstrel.weatherradar.data
 
 import android.content.Context
 import com.darkminstrel.weatherradar.R
-import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 
 enum class UpdatePeriod(val millis:Long) {

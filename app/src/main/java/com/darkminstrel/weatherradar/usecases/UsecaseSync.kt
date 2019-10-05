@@ -1,9 +1,9 @@
 package com.darkminstrel.weatherradar.usecases
 
 import android.content.Context
-import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.repository.Api
+import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.repository.Storage
 import com.darkminstrel.weatherradar.ui.WidgetProvider
 import io.reactivex.Single

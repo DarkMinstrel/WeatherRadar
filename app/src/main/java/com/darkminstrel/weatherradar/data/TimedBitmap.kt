@@ -3,9 +3,7 @@ package com.darkminstrel.weatherradar.data
 import android.graphics.*
 import android.graphics.Typeface.create
 import androidx.annotation.WorkerThread
-import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.assertComputationScheduler
-import com.darkminstrel.weatherradar.assertWorkerThread
 import java.text.SimpleDateFormat
 import java.util.*
 

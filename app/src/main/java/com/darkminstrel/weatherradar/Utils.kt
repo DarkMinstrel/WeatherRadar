@@ -3,11 +3,6 @@ package com.darkminstrel.weatherradar
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class Stopwatch(){
     private val tsStarted = SystemClock.elapsedRealtime()
