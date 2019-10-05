@@ -16,6 +16,7 @@ class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgr
     private var progressAnimator: ObjectAnimator? = null
 
     fun init(){
+        vhFab.setIdle()
         vhFab.hide(false)
         vhFab.setOnClickListener(null)
     }
