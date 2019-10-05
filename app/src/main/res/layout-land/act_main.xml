@@ -50,13 +50,27 @@
 
         </androidx.cardview.widget.CardView>
 
-        <com.jsibbold.zoomage.ZoomageView
-            android:id="@+id/iv_radar"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            app:zoomage_restrictBounds="true"/>
+            android:layout_height="match_parent">
+            <com.jsibbold.zoomage.ZoomageView
+                android:id="@+id/iv_radar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                app:zoomage_restrictBounds="true"/>
+            <ProgressBar
+                    android:id="@+id/progress_horizontal"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:indeterminate="false"
+                    android:layout_gravity="bottom"
+                    tools:max="100"
+                    tools:progress="45"
+                    />
 
+        </FrameLayout>
     </LinearLayout>
 
     <be.rijckaert.tim.animatedvector.FloatingMusicActionButton

@@ -1,11 +1,14 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
+import android.animation.ObjectAnimator
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.darkminstrel.weatherradar.Config
 import com.darkminstrel.weatherradar.DBG
@@ -21,14 +24,14 @@ class ActMainViewHolder(root: View, vm:ActMainViewModel) {
     private val legend = root.findViewById<View>(R.id.legend)
     private val legendContainer = root.findViewById<ViewGroup>(R.id.legend_container)
     private val bottomSheetShadow:View? = root.findViewById(R.id.shadow)
-    private val fab = ViewHolderFab(root.findViewById(R.id.fab))
-    private var animator:Animator? = null
+    private val vhSlideshow = ViewHolderSlideshow(
+        ViewHolderFab(root.findViewById(R.id.fab)),
+        root.findViewById(R.id.progress_horizontal),
+        this)
 
     init {
         fillLegend()
-        fab.hide(false)
-        fab.setOnClickListener(null)
-        fab.setIdle()
+        vhSlideshow.init()
     }
 
     fun setProgress(){
@@ -63,28 +66,7 @@ class ActMainViewHolder(root: View, vm:ActMainViewModel) {
     }
 
     fun setSlideshow(slideshow:List<TimedBitmap>?){
-        animator?.stop()
-        animator = null
-        if(slideshow==null) {
-            fab.hide(true)
-            fab.setOnClickListener(null)
-        } else {
-            fab.show(true)
-            fab.setIdle()
-            fab.setOnClickListener{
-                if(animator!=null){
-                    animator?.stop()
-                    animator = null
-                    fab.setIdle()
-                }else{
-                    animator = Animator(slideshow){
-                        animator = null
-                        fab.setIdle()
-                    }.apply{ start() }
-                    fab.setPlaying()
-                }
-            }
-        }
+        vhSlideshow.setSlideshow(slideshow)
     }
 
     private fun fillLegend(){
@@ -103,28 +85,5 @@ class ActMainViewHolder(root: View, vm:ActMainViewModel) {
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private inner class Animator(private val slideshow:List<TimedBitmap>, private val onFinishListener:()->Unit) {
-        private val handler = Handler()
-        private var index = 0
-        fun start(){
-            runnable.run()
-        }
-        fun stop(){
-            setImage(slideshow.last().bitmap)
-            handler.removeCallbacks(runnable)
-        }
-        private val runnable = object:Runnable {
-            override fun run() {
-                val bitmap = slideshow[index++].bitmap
-                setImage(bitmap)
-                if(index < slideshow.size){
-                    handler.postDelayed(this, Config.ANIMATION_PERIOD)
-                }else{
-                    handler.removeCallbacks(this)
-                    onFinishListener.invoke()
-                }
-            }
-        }
-    }
 
 }
