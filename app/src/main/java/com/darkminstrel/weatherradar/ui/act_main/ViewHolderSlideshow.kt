@@ -5,14 +5,14 @@ import android.graphics.Bitmap
 import android.os.Handler
 import android.view.View
 import android.widget.ProgressBar
-import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
 import com.darkminstrel.weatherradar.Config
 import com.darkminstrel.weatherradar.data.TimedBitmap
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgress:ProgressBar, private val imageEater:(bitmap:Bitmap)->Unit) {
+class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:ProgressBar, private val imageEater:(bitmap:Bitmap)->Unit) {
 
     private val vhFab = ViewHolderFab(fab).apply {
-        setIdle()
+        setPlaying(false)
         hide(false)
     }
     private var slideshowAnimator:Animator? = null
@@ -27,18 +27,18 @@ class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgr
             vhFab.setOnClickListener(null)
         } else {
             vhFab.show(true)
-            vhFab.setIdle()
+            vhFab.setPlaying(false)
             vhFab.setOnClickListener{
                 if(slideshowAnimator!=null){
                     slideshowAnimator?.stop()
                     slideshowAnimator = null
-                    vhFab.setIdle()
+                    vhFab.setPlaying(false)
                 }else{
                     slideshowAnimator = Animator(slideshow){
                         slideshowAnimator = null
-                        vhFab.setIdle()
+                        vhFab.setPlaying(false)
                     }.apply{ start() }
-                    vhFab.setPlaying()
+                    vhFab.setPlaying(true)
                 }
             }
         }

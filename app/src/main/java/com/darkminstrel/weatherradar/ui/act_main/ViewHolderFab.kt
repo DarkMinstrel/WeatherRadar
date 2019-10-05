@@ -1,15 +1,21 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.OvershootInterpolator
-import androidx.lifecycle.ViewModel
-import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
+import com.darkminstrel.weatherradar.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ViewHolderFab(private val fab: FloatingMusicActionButton) {
+class ViewHolderFab(private val fab: FloatingActionButton) {
 
     private val accelerateInterpolator = AccelerateInterpolator()
     private val overshootInterpolator = OvershootInterpolator()
+
+    private var isPlaying:Boolean
+    init {
+        isPlaying = false
+        fab.setImageResource(R.drawable.play_icon)
+    }
 
     fun hide(animate:Boolean){
         fab.animate().cancel();
@@ -31,8 +37,19 @@ class ViewHolderFab(private val fab: FloatingMusicActionButton) {
     }
     fun setOnClickListener(listener: (()->Unit)?) = this.fab.setOnClickListener{listener?.invoke()}
 
-    fun setIdle() = fab.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP)
-
-    fun setPlaying() = fab.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY)
+    fun setPlaying(playing:Boolean) {
+        if(playing && !isPlaying){
+            (fab.drawable as? AnimatedVectorDrawable)?.stop()
+            val drawable = fab.context.getDrawable(R.drawable.play_to_stop_animation)
+            fab.setImageDrawable(drawable)
+            (drawable as AnimatedVectorDrawable).start()
+        }else if(!playing && isPlaying){
+            (fab.drawable as? AnimatedVectorDrawable)?.stop()
+            val drawable = fab.context.getDrawable(R.drawable.stop_to_play_animation)
+            fab.setImageDrawable(drawable)
+            (drawable as AnimatedVectorDrawable).start()
+        }
+        isPlaying = playing
+    }
 
 }

@@ -35,15 +35,15 @@
         android:scaleType="fitCenter"
         app:zoomage_restrictBounds="true"/>
 
-    <be.rijckaert.tim.animatedvector.FloatingMusicActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_settings"
             app:layout_anchor="@+id/legend"
             app:layout_anchorGravity="bottom|end"
             app:layout_dodgeInsetEdges="bottom"
+            tools:src="@drawable/play_icon"
             />
 
     <View
