@@ -25,9 +25,9 @@ class ActMainViewHolder(root: View, vm:ActMainViewModel) {
     private val legendContainer = root.findViewById<ViewGroup>(R.id.legend_container)
     private val bottomSheetShadow:View? = root.findViewById(R.id.shadow)
     private val vhSlideshow = ViewHolderSlideshow(
-        ViewHolderFab(root.findViewById(R.id.fab)),
+        root.findViewById(R.id.fab),
         root.findViewById(R.id.progress_horizontal),
-        this)
+        this::setImage)
 
     init {
         fillLegend()

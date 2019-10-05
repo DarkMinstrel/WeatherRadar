@@ -1,21 +1,24 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
 import android.animation.ObjectAnimator
+import android.graphics.Bitmap
 import android.os.Handler
 import android.view.View
 import android.widget.ProgressBar
+import be.rijckaert.tim.animatedvector.FloatingMusicActionButton
 import com.darkminstrel.weatherradar.Config
 import com.darkminstrel.weatherradar.data.TimedBitmap
 
-class ViewHolderSlideshow(private val fab: ViewHolderFab, private val slideProgress:ProgressBar, private val vh:ActMainViewHolder) {
+class ViewHolderSlideshow(fab: FloatingMusicActionButton, private val slideProgress:ProgressBar, private val imageEater:(bitmap:Bitmap)->Unit) {
 
+    private val vhFab = ViewHolderFab(fab)
     private var slideshowAnimator:Animator? = null
     private var progressAnimator: ObjectAnimator? = null
 
     fun init(){
-        fab.hide(false)
-        fab.setOnClickListener(null)
-        fab.setIdle()
+        vhFab.hide(false)
+        vhFab.setOnClickListener(null)
+        vhFab.setIdle()
     }
 
     fun setSlideshow(slideshow:List<TimedBitmap>?){
@@ -23,22 +26,22 @@ class ViewHolderSlideshow(private val fab: ViewHolderFab, private val slideProgr
         slideshowAnimator = null
         animateProgress(null)
         if(slideshow==null) {
-            fab.hide(true)
-            fab.setOnClickListener(null)
+            vhFab.hide(true)
+            vhFab.setOnClickListener(null)
         } else {
-            fab.show(true)
-            fab.setIdle()
-            fab.setOnClickListener{
+            vhFab.show(true)
+            vhFab.setIdle()
+            vhFab.setOnClickListener{
                 if(slideshowAnimator!=null){
                     slideshowAnimator?.stop()
                     slideshowAnimator = null
-                    fab.setIdle()
+                    vhFab.setIdle()
                 }else{
                     slideshowAnimator = Animator(slideshow){
                         slideshowAnimator = null
-                        fab.setIdle()
+                        vhFab.setIdle()
                     }.apply{ start() }
-                    fab.setPlaying()
+                    vhFab.setPlaying()
                 }
             }
         }
@@ -52,14 +55,14 @@ class ViewHolderSlideshow(private val fab: ViewHolderFab, private val slideProgr
             animateProgress((slideshow.size) * Config.ANIMATION_PERIOD)
         }
         fun stop(){
-            vh.setImage(slideshow.last().bitmap)
+            imageEater.invoke(slideshow.last().bitmap)
             animateProgress(null)
             handler.removeCallbacks(runnable)
         }
         private val runnable = object:Runnable {
             override fun run() {
                 val bitmap = slideshow[index++].bitmap
-                vh.setImage(bitmap)
+                imageEater.invoke(bitmap)
                 if(index < slideshow.size){
                     handler.postDelayed(this, Config.ANIMATION_PERIOD)
                 }else{
