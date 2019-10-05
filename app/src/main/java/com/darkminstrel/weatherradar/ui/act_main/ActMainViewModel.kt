@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.darkminstrel.weatherradar.SyncService
+import com.darkminstrel.weatherradar.SyncJob
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.repository.Prefs
@@ -25,7 +25,7 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
     fun getLiveDataSlideshow() = this.liveDataSlideshow as LiveData<List<TimedBitmap>>
 
     init {
-        SyncService.schedule(context, prefs.getUpdatePeriod(), prefs.wifiOnly, false)
+        SyncJob.schedule(context, prefs.getUpdatePeriod(), prefs.wifiOnly, false)
         reload()
     }
 

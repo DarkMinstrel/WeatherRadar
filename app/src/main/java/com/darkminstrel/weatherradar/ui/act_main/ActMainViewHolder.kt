@@ -1,23 +1,18 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
-import android.animation.ObjectAnimator
 import android.graphics.Bitmap
-import android.os.Build
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
-import com.darkminstrel.weatherradar.Config
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.data.WeatherType
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-class ActMainViewHolder(root: View, vm:ActMainViewModel) {
+class ActMainViewHolder(root: View) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)
     private val progress = root.findViewById<View>(R.id.progress)
     private val error = root.findViewById<View>(R.id.error)

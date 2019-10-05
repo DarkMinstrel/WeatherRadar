@@ -3,7 +3,7 @@ package com.darkminstrel.weatherradar.ui.act_settings
 import android.content.Context
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
-import com.darkminstrel.weatherradar.SyncService
+import com.darkminstrel.weatherradar.SyncJob
 import com.darkminstrel.weatherradar.data.UpdatePeriod
 import com.darkminstrel.weatherradar.repository.Prefs
 import org.koin.android.ext.android.inject
@@ -19,6 +19,6 @@ class FrgSettings : PreferenceFragmentCompat() {
     }
 
     private fun onUpdateChanged(updatePeriod:UpdatePeriod, wifiOnly:Boolean){
-        SyncService.schedule(appctx, updatePeriod, wifiOnly, true)
+        SyncJob.schedule(appctx, updatePeriod, wifiOnly, true)
     }
 }

@@ -13,7 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 
-class SyncService : JobService() {
+class SyncJob : JobService() {
 
     companion object {
 
@@ -37,7 +37,7 @@ class SyncService : JobService() {
                         JobInfo.NETWORK_TYPE_ANY
                     }
                 }
-                val builder = JobInfo.Builder(JOB_ID, ComponentName(context, SyncService::class.java))
+                val builder = JobInfo.Builder(JOB_ID, ComponentName(context, SyncJob::class.java))
                     .setRequiredNetworkType(networkType)
                     .setPeriodic(period.millis)
                     .setPersisted(true)
