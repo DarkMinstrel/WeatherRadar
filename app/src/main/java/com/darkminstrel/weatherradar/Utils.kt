@@ -37,3 +37,6 @@ fun DBG(s:Any?){
         Log.d("RADARDBG", s.toString())
     }
 }
+fun DBGE(throwable:Throwable?){
+    DBG(throwable?.message)
+}

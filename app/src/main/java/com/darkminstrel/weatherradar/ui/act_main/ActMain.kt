@@ -6,11 +6,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.ui.act_settings.ActSettings
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.getViewModel
 
 class ActMain : AppCompatActivity() {
@@ -21,9 +19,11 @@ class ActMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main)
-        vh = ActMainViewHolder(findViewById(android.R.id.content))
 
         vm = getViewModel()
+
+        vh = ActMainViewHolder(findViewById(android.R.id.content), vm)
+
         vm.getLiveDataTitle().observe(this, Observer(this::setTitle))
         vm.getLiveDataBitmap().observe(this, Observer {
             when(it){
@@ -32,6 +32,7 @@ class ActMain : AppCompatActivity() {
                 else -> vh?.setProgress()
             }
         })
+        vm.getLiveDataSlideshow().observe(this, Observer { vh?.setSlideshow(it) })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

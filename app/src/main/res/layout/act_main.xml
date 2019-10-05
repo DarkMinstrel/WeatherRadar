@@ -35,6 +35,17 @@
         android:scaleType="fitCenter"
         app:zoomage_restrictBounds="true"/>
 
+    <be.rijckaert.tim.animatedvector.FloatingMusicActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_settings"
+            app:layout_anchor="@+id/legend"
+            app:layout_anchorGravity="bottom|end"
+            app:layout_dodgeInsetEdges="bottom"
+            />
+
     <View
         android:id="@+id/shadow"
         android:layout_width="match_parent"
@@ -46,6 +57,7 @@
         android:id="@+id/legend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_insetEdge="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
         app:behavior_peekHeight="@dimen/bottom_sheet_peek_height"
         app:behavior_hideable="false">

@@ -61,16 +61,17 @@ class Api {
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
             .map {body -> BitmapFactory.decodeStream(body.byteStream()) }
-            .map {bitmap -> TimedBitmap(ts,bitmap)}
+            .map {bitmap -> TimedBitmap(ts,bitmap,radar)}
     }
 
-    fun getSlideshow(radar: String, ts:Long):Single<List<TimedBitmap>>{
+    fun getSlideshow(timedBitmap:TimedBitmap):Single<List<TimedBitmap>>{
         val singles = ArrayList<Single<TimedBitmap>>()
         (0..SLIDESHOW_ITEMS).forEach{
-            val t = ts - (it * SLIDESHOW_PERIOD)
-            singles.add(getImage(radar, t))
+            val t = timedBitmap.ts - (it * SLIDESHOW_PERIOD)
+            singles.add(getImage(timedBitmap.radar, t))
         }
         return Single.merge(singles).toList()
+            .map { list -> list.sortBy {it.ts}; list }
             .subscribeOn(Schedulers.io())
     }
 

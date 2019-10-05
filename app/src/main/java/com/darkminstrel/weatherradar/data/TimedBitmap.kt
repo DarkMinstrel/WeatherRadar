@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @WorkerThread
-class TimedBitmap(ts:Long, rawBitmap: Bitmap) {
+class TimedBitmap(ts:Long, rawBitmap: Bitmap, val radar: String) {
     val bitmap:Bitmap
     val ts:Long
 

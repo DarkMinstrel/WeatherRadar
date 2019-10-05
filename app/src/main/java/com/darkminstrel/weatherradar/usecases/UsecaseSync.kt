@@ -22,5 +22,9 @@ class UsecaseSync(private val context: Context, private val api: Api, private va
             .doOnSuccess { WidgetProvider.updateAllWidgets(context) }
     }
 
+    fun getSlideshow(timedBitmap: TimedBitmap):Single<List<TimedBitmap>> {
+        return api.getSlideshow(timedBitmap)
+    }
+
 }
 
