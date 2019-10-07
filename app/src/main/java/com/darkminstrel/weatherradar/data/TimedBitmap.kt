@@ -42,8 +42,8 @@ class TimedBitmap(ts:Long, rawBitmap: Bitmap, val radar: String) {
         canvas.drawText(time, bitmap.width - w - margin, margin + 32f, paint)
 
         paint.textSize = 16f
-        val w2 = paint.measureText(date)
-        canvas.drawText(date, bitmap.width - w2 - margin, margin + 32f + 24f, paint)
+        paint.textAlign = Paint.Align.CENTER
+        canvas.drawText(date, bitmap.width - w/2 - margin, margin + 32f + 24f, paint)
     }
 
 }

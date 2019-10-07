@@ -1,6 +1,5 @@
 package com.darkminstrel.weatherradar.ui.act_settings
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 class ActSettings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setResult(Activity.RESULT_OK)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
@@ -26,4 +24,6 @@ class ActSettings : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }

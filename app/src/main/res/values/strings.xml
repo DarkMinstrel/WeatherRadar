@@ -5,7 +5,7 @@
     <string name="legend">Легенда</string>
 
     <string name="radar">Радар</string>
-    <string name="background_updates">Фоновое обновление</string>
+    <string name="background_updates">Фоновое обновление виджета</string>
     <string name="update_period">Период обновления</string>
     <string name="wifi_only">Только по Wi-Fi</string>
     <string name="dont_update">не обновлять</string>
