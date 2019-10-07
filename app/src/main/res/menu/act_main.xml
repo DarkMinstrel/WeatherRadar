@@ -6,6 +6,7 @@
             android:id="@+id/menu_legend"
             android:icon="@drawable/ic_info"
             android:title="@string/legend"
+            android:visible="false"
             app:showAsAction="always"
             tools:ignore="AlwaysShowAction" />
     <item
