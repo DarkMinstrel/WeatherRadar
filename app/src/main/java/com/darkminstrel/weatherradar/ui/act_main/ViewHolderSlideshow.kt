@@ -1,5 +1,6 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.graphics.Bitmap
 import android.os.Handler
@@ -15,12 +16,12 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
         setPlaying(false)
         hide(false)
     }
-    private var slideshowAnimator:Animator? = null
-    private var progressAnimator: ObjectAnimator? = null
+    private var slideshowHandler:SlideshowHandler? = null
+    private var progressAnimator: AnimatorSet? = null
 
     fun setSlideshow(slideshow:List<TimedBitmap>?){
-        slideshowAnimator?.stop()
-        slideshowAnimator = null
+        slideshowHandler?.stop()
+        slideshowHandler = null
         animateProgressbar(null)
         if(slideshow==null) {
             vhFab.hide(true)
@@ -29,13 +30,13 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
             vhFab.show(true)
             vhFab.setPlaying(false)
             vhFab.setOnClickListener{
-                if(slideshowAnimator!=null){
-                    slideshowAnimator?.stop()
-                    slideshowAnimator = null
+                if(slideshowHandler!=null){
+                    slideshowHandler?.stop()
+                    slideshowHandler = null
                     vhFab.setPlaying(false)
                 }else{
-                    slideshowAnimator = Animator(slideshow){
-                        slideshowAnimator = null
+                    slideshowHandler = SlideshowHandler(slideshow){
+                        slideshowHandler = null
                         vhFab.setPlaying(false)
                     }.apply{ start() }
                     vhFab.setPlaying(true)
@@ -44,7 +45,7 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
         }
     }
 
-    private inner class Animator(private val slideshow:List<TimedBitmap>, private val onFinishListener:()->Unit) {
+    private inner class SlideshowHandler(private val slideshow:List<TimedBitmap>, private val onFinishListener:()->Unit) {
         private val handler = Handler()
         private var index = 0
         fun start(){
@@ -63,7 +64,6 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
                 if(index < slideshow.size){
                     handler.postDelayed(this, Config.ANIMATION_PERIOD)
                 }else{
-                    animateProgressbar(null)
                     handler.removeCallbacks(this)
                     onFinishListener.invoke()
                 }
@@ -71,14 +71,19 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
         }
     }
 
-    @Suppress("UsePropertyAccessSyntax")
     private fun animateProgressbar(duration:Long?){
         progressAnimator?.cancel()
         if(duration!=null){
-            slideProgress.visibility = View.VISIBLE
             if(slideProgress.max!=1000) slideProgress.max = 1000
-            slideProgress.setProgress(0)
-            progressAnimator = ObjectAnimator.ofInt(slideProgress, "progress", 1000).setDuration(duration).apply { start() }
+            slideProgress.visibility = View.VISIBLE
+            slideProgress.alpha = 1f
+            val animProgress = ObjectAnimator.ofInt(slideProgress, "progress", 0, 1000).setDuration(duration)
+            val animFade = ObjectAnimator.ofFloat(slideProgress, "alpha", 1f, 0f).setDuration(Config.ANIMATION_PERIOD)
+
+            progressAnimator = AnimatorSet().apply {
+                playSequentially(animProgress, animFade)
+                start()
+            }
         }else{
             slideProgress.visibility = View.INVISIBLE
             progressAnimator = null
