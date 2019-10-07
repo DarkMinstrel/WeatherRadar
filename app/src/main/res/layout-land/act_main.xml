@@ -1,84 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#CCCCCC"
-    tools:context=".ui.act_main.ActMain">
-
-    <TextView
-        android:id="@+id/error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:drawableTop="@drawable/dino"
-        android:drawablePadding="8dp"
-        android:gravity="center_horizontal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:text="@string/network_error"/>
-
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"/>
-
-    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:background="@color/bitmap_background"
+        tools:context=".ui.act_main.ActMain">
+
+    <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/dino"
+            android:drawablePadding="8dp"
+            android:gravity="center_horizontal"
+            android:text="@string/network_error"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/legend"
-            android:layout_width="240dp"
-            android:layout_height="match_parent">
+                android:id="@+id/legend"
+                android:layout_width="240dp"
+                android:layout_height="match_parent">
+
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/legend_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:clipToPadding="false"/>
+                    android:layout_height="wrap_content">
+
+                <LinearLayout
+                        android:id="@+id/legend_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp" />
             </ScrollView>
 
         </androidx.cardview.widget.CardView>
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.jsibbold.zoomage.ZoomageView
-                android:id="@+id/iv_radar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                app:zoomage_restrictBounds="true"/>
+                android:layout_height="match_parent">
+
+            <com.jsibbold.zoomage.ZoomageView
+                    android:id="@+id/iv_radar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:zoomage_restrictBounds="true" />
+
             <ProgressBar
                     android:id="@+id/progress_horizontal"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
                     android:indeterminate="false"
-                    android:layout_gravity="bottom"
+                    android:scaleY="4"
                     tools:max="100"
-                    tools:progress="45"
-                    />
+                    tools:progress="45" />
 
         </FrameLayout>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom|end"
-        tools:src="@drawable/play_icon"/>
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            tools:src="@drawable/play_icon" />
 
 </FrameLayout>

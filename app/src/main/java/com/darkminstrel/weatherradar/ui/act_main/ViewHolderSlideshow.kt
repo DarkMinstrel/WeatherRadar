@@ -63,6 +63,7 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
                 if(index < slideshow.size){
                     handler.postDelayed(this, Config.ANIMATION_PERIOD)
                 }else{
+                    animateProgressbar(null)
                     handler.removeCallbacks(this)
                     onFinishListener.invoke()
                 }
