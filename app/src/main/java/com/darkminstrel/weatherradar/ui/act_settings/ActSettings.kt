@@ -1,8 +1,10 @@
 package com.darkminstrel.weatherradar.ui.act_settings
 
+import android.appwidget.AppWidgetManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.darkminstrel.weatherradar.R
 
 class ActSettings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -10,6 +12,10 @@ class ActSettings : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
+
+        if(intent?.action == AppWidgetManager.ACTION_APPWIDGET_CONFIGURE){
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_24px)
+        }
 
         supportFragmentManager
             .beginTransaction()
