@@ -11,6 +11,7 @@
     <string name="dont_update">не обновлять</string>
 
     <string name="network_error">Сервер недоступен</string>
+    <string name="radar_unavailable">Радар временно не работает.\nПопробуйте позже.</string>
     <string name="radar_1">Слоистообразная облачность</string>
     <string name="radar_2">Осадки слабые</string>
     <string name="radar_3">Осадки умеренные</string>

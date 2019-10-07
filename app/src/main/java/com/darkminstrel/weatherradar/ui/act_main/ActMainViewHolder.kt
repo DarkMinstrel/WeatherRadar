@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
+import com.darkminstrel.weatherradar.RadarException
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.data.WeatherType
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -15,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 class ActMainViewHolder(root: View) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)
     private val progress = root.findViewById<View>(R.id.progress)
-    private val error = root.findViewById<View>(R.id.error)
+    private val error = root.findViewById<TextView>(R.id.error)
     private val legend = root.findViewById<View>(R.id.legend)
     private val legendContainer = root.findViewById<ViewGroup>(R.id.legend_container)
     private val bottomSheetShadow:View? = root.findViewById(R.id.shadow)
@@ -43,6 +44,7 @@ class ActMainViewHolder(root: View) {
         ivRadar.visibility = View.INVISIBLE
         legend.visibility = View.INVISIBLE
         bottomSheetShadow?.visibility = View.INVISIBLE
+        error.setText(if(t is RadarException) R.string.radar_unavailable else R.string.network_error)
     }
 
     fun setImage(bitmap: Bitmap){

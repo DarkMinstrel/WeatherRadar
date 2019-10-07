@@ -22,8 +22,7 @@ class ActMain : AppCompatActivity() {
 
         vm = getViewModel()
 
-        vh = ActMainViewHolder(findViewById(android.R.id.content), vm)
-
+        vh = ActMainViewHolder(findViewById(android.R.id.content))
         vm.getLiveDataTitle().observe(this, Observer{supportActionBar?.subtitle = it})
         vm.getLiveDataBitmap().observe(this, Observer {
             when(it){

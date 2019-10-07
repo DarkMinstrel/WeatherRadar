@@ -1,6 +1,8 @@
 package com.darkminstrel.weatherradar.repository
 
 import android.graphics.BitmapFactory
+import com.darkminstrel.weatherradar.EmptyImageRadarException
+import com.darkminstrel.weatherradar.NoTimestampRadarException
 import com.darkminstrel.weatherradar.assertIoScheduler
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import io.reactivex.Single
@@ -44,7 +46,7 @@ class Api {
             val m2 = Pattern.compile("\\d{10}").matcher(s)
             if(m2.find()) return m2.group(0).toLong()
         }
-        throw RuntimeException("Image URL not found")
+        throw NoTimestampRadarException()
     }
 
     fun getLatestTimestamp(radar:String): Single<Long>{
@@ -60,7 +62,7 @@ class Api {
         return download(url)
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
-            .map {body -> BitmapFactory.decodeStream(body.byteStream()) }
+            .map {body -> BitmapFactory.decodeStream(body.byteStream()) ?: throw EmptyImageRadarException() }
             .map {bitmap -> TimedBitmap(ts,bitmap,radar)}
     }
 
