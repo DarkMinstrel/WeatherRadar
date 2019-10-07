@@ -17,10 +17,12 @@ class ActSettings : AppCompatActivity() {
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_24px)
         }
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(android.R.id.content, FrgSettings())
-            .commit()
+        if(savedInstanceState==null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(android.R.id.content, FrgSettings())
+                .commit()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
