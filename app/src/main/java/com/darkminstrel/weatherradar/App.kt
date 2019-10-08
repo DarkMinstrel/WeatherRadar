@@ -32,7 +32,7 @@ class App:Application() {
             single{ Broadcaster(get()) }
         }
         val usecaseModule = module {
-            factory{ UsecaseSync(get(), get(), get(), get(), get()) }
+            factory{ UsecaseSync(get(), get(), get(), get()) }
         }
         val vmModule = module {
             viewModel{ ActMainViewModel(get(), get(), get()) }

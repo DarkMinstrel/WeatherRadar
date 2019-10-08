@@ -63,7 +63,7 @@ class FrgSettingsViewHolder(context: Context, preferenceManager:PreferenceManage
     }
 
     private fun refresh(context: Context){
-        val radar = prefs.getRadar()
+        val radar = prefs.getRadarEnum()
         val period = prefs.getUpdatePeriod()
         val wifiOnly = prefs.wifiOnly
         val updatesEnabled = (period!=UpdatePeriod.NONE)

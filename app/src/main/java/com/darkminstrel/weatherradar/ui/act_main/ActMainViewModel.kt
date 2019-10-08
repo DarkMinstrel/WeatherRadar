@@ -30,7 +30,7 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
     }
 
     fun reload(){
-        val radar = prefs.getRadar()
+        val radar = prefs.getRadarEnum()
         liveDataTitle.value = radar.getCity(context)
         liveDataBitmap.value = null
         liveDataSlideshow.value = null
