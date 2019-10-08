@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,7 +11,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.widget.RemoteViews
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
-import com.darkminstrel.weatherradar.assertUiThread
 import com.darkminstrel.weatherradar.repository.Storage
 import com.darkminstrel.weatherradar.ui.act_main.ActMain
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,14 +50,4 @@ class WidgetProvider: AppWidgetProvider(), KoinComponent {
         }
     }
 
-    companion object {
-        fun updateAllWidgets(context: Context){
-            assertUiThread()
-            val intent = Intent(context, WidgetProvider::class.java)
-            intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-            val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-            context.sendBroadcast(intent)
-        }
-    }
 }
