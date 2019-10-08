@@ -2,6 +2,7 @@ package com.darkminstrel.weatherradar
 
 import android.app.Application
 import com.darkminstrel.weatherradar.repository.Api
+import com.darkminstrel.weatherradar.repository.Downloader
 import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.repository.Storage
 import com.darkminstrel.weatherradar.ui.Broadcaster
@@ -28,7 +29,9 @@ class App:Application() {
         val appModule = module {
             single{ Storage(get()) }
             single{ Prefs(get()) }
-            single{ Api() }
+            single{ BitmapFactory() }
+            single{ Downloader() }
+            single{ Api(get(), get()) }
             single{ Broadcaster(get()) }
         }
         val usecaseModule = module {
