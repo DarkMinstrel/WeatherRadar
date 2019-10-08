@@ -63,7 +63,7 @@ class Api {
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
             .map {body -> BitmapFactory.decodeStream(body.byteStream()) ?: throw EmptyImageRadarException() }
-            .map {bitmap -> TimedBitmap(ts,bitmap,radar)}
+            .map {bitmap -> TimedBitmap.create(ts,bitmap,radar)}
     }
 
     fun getSlideshow(timedBitmap:TimedBitmap):Single<List<TimedBitmap>>{
