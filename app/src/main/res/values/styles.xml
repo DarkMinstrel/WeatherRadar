@@ -6,6 +6,7 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">?attr/colorOnPrimary</item>
+        <item name="android:windowBackground">@color/bitmap_background</item>
     </style>
 
 </resources>
