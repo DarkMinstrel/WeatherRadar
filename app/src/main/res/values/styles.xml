@@ -6,6 +6,9 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="ActMainTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/bitmap_background</item>
     </style>
 
