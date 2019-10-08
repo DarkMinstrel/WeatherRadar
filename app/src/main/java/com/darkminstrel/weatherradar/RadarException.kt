@@ -1,6 +1,8 @@
 package com.darkminstrel.weatherradar
 
+import java.io.IOException
+
 interface RadarException
 
-class EmptyImageRadarException:Exception(), RadarException
-class NoTimestampRadarException:Exception(), RadarException
+class EmptyImageRadarException: IOException(), RadarException
+class NoTimestampRadarException:IOException(), RadarException

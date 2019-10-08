@@ -19,14 +19,14 @@ fun assertUiThread(){
     if(Thread.currentThread() != Looper.getMainLooper().thread) throw RuntimeException("assertUiThread() failed")
 }
 fun assertComputationScheduler() {
-    if (BuildConfig.DEBUG_FEATURES && !Thread.currentThread().name.startsWith("RxComputationThreadPool")) throw RuntimeException("assertComputationScheduler() failed")
+    val name = Thread.currentThread().name
+    if (BuildConfig.DEBUG_FEATURES && !name.startsWith("RxComputationThreadPool")) throw RuntimeException("assertComputationScheduler() failed, actual thread: $name")
 }
-
 fun assertIoScheduler() {
-    if (BuildConfig.DEBUG_FEATURES && !Thread.currentThread().name.startsWith("RxCachedThreadScheduler")) throw RuntimeException("assertIoScheduler() failed")
+    val name = Thread.currentThread().name
+    if (BuildConfig.DEBUG_FEATURES && !name.startsWith("RxCachedThreadScheduler")) throw RuntimeException("assertIoScheduler() failed, actual thread: $name")
 }
 
-@Suppress("ConstantConditionIf", "FunctionName")
 fun DBG(s:Any?){
     if(BuildConfig.DEBUG_FEATURES) {
         Log.d("RADARDBG", s.toString())
