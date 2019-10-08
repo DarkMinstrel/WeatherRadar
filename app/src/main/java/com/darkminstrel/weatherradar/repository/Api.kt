@@ -29,17 +29,17 @@ class Api(private val downloader: Downloader, private val bitmapFactory: BitmapF
     fun getLatestTimestamp(radar:String): Single<Long>{
         val url = String.format(URL_PAGE, radar)
         return downloader.download(url)
+            .subscribeOn(Schedulers.io())
             .map {body -> body.string()}
             .map {html -> findTimestamp(radar, html)}
-            .subscribeOn(Schedulers.io())
     }
 
     fun getImage(radar: String, ts:Long): Single<TimedBitmap>{
         val url = String.format(URL_IMAGE, radar, radar, ts)
         return downloader.download(url)
             .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.computation())
             .map {body -> bitmapFactory.decodeBody(body) ?: throw EmptyImageRadarException() }
+            .observeOn(Schedulers.computation())
             .map {bitmap -> TimedBitmap(ts,bitmapFactory.prepareBitmap(bitmap, ts),radar)}
     }
 

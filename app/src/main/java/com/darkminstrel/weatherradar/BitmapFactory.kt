@@ -8,6 +8,7 @@ import java.util.*
 class BitmapFactory {
 
     fun decodeBody(body:ResponseBody):Bitmap?{
+        assertIoScheduler()
         return android.graphics.BitmapFactory.decodeStream(body.byteStream())
     }
 
