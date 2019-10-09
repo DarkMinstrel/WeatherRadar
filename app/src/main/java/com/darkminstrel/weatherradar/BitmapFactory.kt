@@ -29,20 +29,37 @@ class BitmapFactory {
         val date = SimpleDateFormat("dd MMM", Locale.getDefault()).format(d)
 
         val margin = 12f
+        val marginHalf = margin/2
         val canvas = Canvas(bitmap)
-        val paint = Paint()
-        paint.textAlign = Paint.Align.LEFT
-        paint.color = Color.BLACK
-        paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
-        paint.isAntiAlias = true
+        val paintTime = Paint().apply {
+            textAlign = Paint.Align.LEFT
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
+            isAntiAlias = true
+            color = Color.BLACK
+            textSize = 32f
+        }
+        val paintDate = Paint().apply {
+            textAlign = Paint.Align.CENTER
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
+            isAntiAlias = true
+            color = Color.BLACK
+            textSize = 16f
+        }
+        val paintBg = Paint().apply {
+            color = 0xA0CCCCCC.toInt()
+            style = Paint.Style.FILL
+        }
+        val paintStroke = Paint().apply {
+            color = 0xA0000000.toInt()
+            style = Paint.Style.STROKE
+            strokeWidth = 2f
+        }
 
-        paint.textSize = 32f
-        val w = paint.measureText(time)
-        canvas.drawText(time, bitmap.width - w - margin, margin + 32f, paint)
-
-        paint.textSize = 16f
-        paint.textAlign = Paint.Align.CENTER
-        canvas.drawText(date, bitmap.width - w/2 - margin, margin + 32f + 24f, paint)
+        val widthTime = paintTime.measureText(time)
+        canvas.drawRoundRect(bitmap.width-widthTime-margin-marginHalf, marginHalf, bitmap.width.toFloat()-marginHalf, paintTime.textSize+paintDate.textSize+2*margin+marginHalf, marginHalf, marginHalf, paintBg)
+        canvas.drawRoundRect(bitmap.width-widthTime-margin-marginHalf, marginHalf, bitmap.width.toFloat()-marginHalf, paintTime.textSize+paintDate.textSize+2*margin+marginHalf, marginHalf, marginHalf, paintStroke)
+        canvas.drawText(time, bitmap.width - widthTime - margin, margin + 32f, paintTime)
+        canvas.drawText(date, bitmap.width - widthTime/2 - margin, margin + 32f + 24f, paintDate)
     }
 
 }
