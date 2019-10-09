@@ -48,11 +48,13 @@ class BitmapFactory {
         val paintBg = Paint().apply {
             color = 0xA0CCCCCC.toInt()
             style = Paint.Style.FILL
+            isAntiAlias = true
         }
         val paintStroke = Paint().apply {
             color = 0xA0000000.toInt()
             style = Paint.Style.STROKE
             strokeWidth = 2f
+            isAntiAlias = true
         }
 
         val widthTime = paintTime.measureText(time)
