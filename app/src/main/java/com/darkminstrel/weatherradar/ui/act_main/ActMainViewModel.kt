@@ -9,12 +9,13 @@ import com.darkminstrel.weatherradar.SyncJob
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.repository.Prefs
+import com.darkminstrel.weatherradar.ui.Broadcaster
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 
-class ActMainViewModel(private val context: Context, private val prefs: Prefs, private val usecaseSync: UsecaseSync): ViewModel() {
+class ActMainViewModel(private val context: Context, private val prefs: Prefs, private val usecaseSync: UsecaseSync, private val broadcaster: Broadcaster): ViewModel() {
 
     private var disposable: Disposable? = null
     private var disposableAnimation: Disposable? = null
@@ -26,7 +27,7 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
     fun getLiveDataSlideshow() = this.liveDataSlideshow as LiveData<List<TimedBitmap>>
 
     init {
-        SyncJob.schedule(context, prefs.getUpdatePeriod(), prefs.wifiOnly, false)
+        broadcaster.scheduleSyncJob()
         reload()
     }
 

@@ -32,13 +32,13 @@ class App:Application() {
             single{ BitmapFactory() }
             single{ Downloader() }
             single{ Api(get(), get()) }
-            single{ Broadcaster(get()) }
+            single{ Broadcaster(get(), get()) }
         }
         val usecaseModule = module {
             factory{ UsecaseSync(get(), get(), get(), get()) }
         }
         val vmModule = module {
-            viewModel{ ActMainViewModel(get(), get(), get()) }
+            viewModel{ ActMainViewModel(get(), get(), get(), get()) }
         }
 
         return startKoin {
