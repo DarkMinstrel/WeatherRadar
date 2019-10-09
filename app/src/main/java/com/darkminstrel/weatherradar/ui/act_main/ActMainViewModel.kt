@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.darkminstrel.weatherradar.DBGE
 import com.darkminstrel.weatherradar.SyncJob
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
@@ -50,8 +51,13 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
         disposableAnimation = usecaseSync.getSlideshow(timedBitmap)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onSuccess = {slideshow -> liveDataSlideshow.value = slideshow},
-                onError = {liveDataSlideshow.value = null}
+                onSuccess = {slideshow ->
+                    liveDataSlideshow.value = if(slideshow.size>1) slideshow else null
+                },
+                onError = {
+                    DBGE("Slideshow", it)
+                    liveDataSlideshow.value = null
+                }
             )
     }
 

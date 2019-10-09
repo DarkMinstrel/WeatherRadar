@@ -3,6 +3,8 @@ package com.darkminstrel.weatherradar
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
+import java.io.PrintWriter
+import java.io.StringWriter
 
 class Stopwatch(){
     private val tsStarted = SystemClock.elapsedRealtime()
@@ -32,6 +34,11 @@ fun DBG(s:Any?){
         Log.d("RADARDBG", s.toString())
     }
 }
-fun DBGE(throwable:Throwable?){
-    DBG(throwable?.message)
+fun DBGE(title:String, throwable:Throwable){
+    if(BuildConfig.DEBUG_FEATURES) {
+        DBG("$title: ${throwable.message}")
+        val writer = PrintWriter(StringWriter())
+        throwable.printStackTrace(writer)
+        DBG(writer.toString())
+    }
 }

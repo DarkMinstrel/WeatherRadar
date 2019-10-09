@@ -51,7 +51,7 @@ class App:Application() {
     private fun setupUndeliverableHandler(){
         RxJavaPlugins.setErrorHandler { e ->
             if (e is UndeliverableException) {
-                DBGE(e)
+                DBGE("Undeliverable", e)
             } else {
                 Thread.currentThread().also { thread ->
                     thread.uncaughtExceptionHandler.uncaughtException(thread, e)

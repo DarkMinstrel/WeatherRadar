@@ -1,9 +1,11 @@
 package com.darkminstrel.weatherradar.repository
 
 import com.darkminstrel.weatherradar.BitmapFactory
+import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.EmptyImageRadarException
 import com.darkminstrel.weatherradar.NoTimestampRadarException
 import com.darkminstrel.weatherradar.data.TimedBitmap
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.util.regex.Pattern
@@ -44,12 +46,16 @@ class Api(private val downloader: Downloader, private val bitmapFactory: BitmapF
     }
 
     fun getSlideshow(timedBitmap:TimedBitmap):Single<List<TimedBitmap>>{
-        val singles = ArrayList<Single<TimedBitmap>>()
+        val observables = ArrayList<Observable<TimedBitmap>>()
         (0..SLIDESHOW_ITEMS).forEach{
             val t = timedBitmap.ts - (it * SLIDESHOW_PERIOD)
-            singles.add(getImage(timedBitmap.radar, t))
+            val observable = getImage(timedBitmap.radar, t)
+                .toObservable()
+                .onErrorResumeNext(Observable.empty())
+            observables.add(observable)
         }
-        return Single.merge(singles).toList()
+        return Observable.merge(observables)
+            .toList()
             .map { list -> list.sortBy {it.ts}; list }
             .subscribeOn(Schedulers.io())
     }
