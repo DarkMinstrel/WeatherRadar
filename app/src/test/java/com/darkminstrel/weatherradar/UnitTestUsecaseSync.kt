@@ -8,9 +8,7 @@ import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.repository.Storage
 import com.darkminstrel.weatherradar.ui.Broadcaster
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -74,6 +72,9 @@ class UnitTestUsecaseSync {
                 error.printStackTrace()
             }
         )
+        verify(downloaderSuccess, times(2)).download(anyString())
+        verify(storage).write(any())
+        verify(broadcaster).updateAllWidgets()
     }
 
     @Test
@@ -88,6 +89,9 @@ class UnitTestUsecaseSync {
                 assert(error is IOException)
             }
         )
+        verify(downloaderNoNetwork, times(1)).download(anyString())
+        verifyZeroInteractions(storage)
+        verifyZeroInteractions(broadcaster)
     }
 
 }
