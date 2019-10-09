@@ -55,6 +55,11 @@ class ActMain : AppCompatActivity() {
         vm.reload()
     }
 
+    override fun onStart() {
+        super.onStart()
+        vm.onActivityStarted()
+    }
+
     override fun onDestroy() {
         vh = null
         super.onDestroy()

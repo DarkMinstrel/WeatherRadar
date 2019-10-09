@@ -1,11 +1,13 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
 import android.content.Context
+import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.darkminstrel.weatherradar.Config
+import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.DBGE
-import com.darkminstrel.weatherradar.SyncJob
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.repository.Prefs
@@ -22,6 +24,7 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
     private val liveDataTitle = MutableLiveData<String>()
     private val liveDataBitmap = MutableLiveData<DataHolder<TimedBitmap>>()
     private val liveDataSlideshow = MutableLiveData<List<TimedBitmap>>()
+    private var tsBitmap:Long? = null
     fun getLiveDataTitle() = this.liveDataTitle as LiveData<String>
     fun getLiveDataBitmap() = this.liveDataBitmap as LiveData<DataHolder<TimedBitmap>>
     fun getLiveDataSlideshow() = this.liveDataSlideshow as LiveData<List<TimedBitmap>>
@@ -43,8 +46,21 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { loadSlideshow(it) }
             .subscribeBy(
-                onSuccess = {bitmap -> liveDataBitmap.value = DataHolder.Success(bitmap)},
+                onSuccess = {bitmap ->
+                    tsBitmap = bitmap.ts
+                    liveDataBitmap.value = DataHolder.Success(bitmap)
+                },
                 onError = {error -> liveDataBitmap.value = DataHolder.Error(error)})
+    }
+
+    fun onActivityStarted(){
+        tsBitmap?.let {
+            val elapsed = SystemClock.elapsedRealtime() - it
+            if(elapsed > Config.SLIDESHOW_INTERVAL_SEC*1000L){
+                DBG("Bitmap is outdated, reloading...")
+                reload()
+            }
+        }
     }
 
     private fun loadSlideshow(timedBitmap: TimedBitmap){

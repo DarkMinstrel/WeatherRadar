@@ -50,7 +50,7 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
         private var index = 0
         fun start(){
             runnable.run()
-            animateProgressbar((slideshow.size) * Config.ANIMATION_PERIOD)
+            animateProgressbar((slideshow.size) * Config.SLIDESHOW_ANIMATION_PERIOD_MS)
         }
         fun stop(){
             imageEater.invoke(slideshow.last().bitmap)
@@ -62,7 +62,7 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
                 val bitmap = slideshow[index++].bitmap
                 imageEater.invoke(bitmap)
                 if(index < slideshow.size){
-                    handler.postDelayed(this, Config.ANIMATION_PERIOD)
+                    handler.postDelayed(this, Config.SLIDESHOW_ANIMATION_PERIOD_MS)
                 }else{
                     handler.removeCallbacks(this)
                     onFinishListener.invoke()
@@ -78,7 +78,7 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
             slideProgress.visibility = View.VISIBLE
             slideProgress.alpha = 1f
             val animProgress = ObjectAnimator.ofInt(slideProgress, "progress", 0, 1000).setDuration(duration)
-            val animFade = ObjectAnimator.ofFloat(slideProgress, "alpha", 1f, 0f).setDuration(Config.ANIMATION_PERIOD)
+            val animFade = ObjectAnimator.ofFloat(slideProgress, "alpha", 1f, 0f).setDuration(Config.SLIDESHOW_ANIMATION_PERIOD_MS)
 
             progressAnimator = AnimatorSet().apply {
                 playSequentially(animProgress, animFade)
