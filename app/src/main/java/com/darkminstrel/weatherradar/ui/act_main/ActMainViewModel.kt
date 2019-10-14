@@ -11,7 +11,7 @@ import com.darkminstrel.weatherradar.DBGE
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.repository.Prefs
-import com.darkminstrel.weatherradar.ui.Broadcaster
+import com.darkminstrel.weatherradar.Broadcaster
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
