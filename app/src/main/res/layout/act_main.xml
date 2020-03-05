@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bitmap_background"
+        android:clipChildren="false"
         tools:context=".ui.act_main.ActMain">
 
     <TextView
@@ -34,16 +34,6 @@
             android:scaleType="fitCenter"
             app:zoomage_restrictBounds="true" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_anchor="@+id/legend"
-            app:layout_anchorGravity="bottom|end"
-            app:layout_dodgeInsetEdges="bottom"
-            tools:src="@drawable/play_icon" />
-
     <View
             android:id="@+id/shadow"
             android:layout_width="match_parent"
@@ -51,15 +41,34 @@
             android:background="@drawable/shape_gradient_top_shadow"
             app:layout_anchor="@id/legend" />
 
-    <ProgressBar
-            android:id="@+id/progress_horizontal"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:indeterminate="false"
-            android:scaleY="4"
-            tools:max="100"
-            tools:progress="45" />
+    <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/circular_progress_margin"
+            app:layout_anchor="@+id/legend"
+            app:layout_anchorGravity="bottom|end"
+            app:layout_dodgeInsetEdges="bottom"
+            android:clipChildren="false">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:fabSize="normal"
+                tools:src="@drawable/play_icon" />
+
+        <ProgressBar
+                android:id="@+id/progress_horizontal"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="@dimen/circular_progress_radius_x2"
+                android:layout_height="@dimen/circular_progress_radius_x2"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/progress_round"
+                tools:max="100"
+                tools:progress="45" />
+
+    </FrameLayout>
 
     <androidx.cardview.widget.CardView
             android:id="@+id/legend"
