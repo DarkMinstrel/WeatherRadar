@@ -53,7 +53,7 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
                 onError = {error -> liveDataBitmap.value = DataHolder.Error(error)})
     }
 
-    fun onActivityStarted(){
+    fun onActivityResumed(){
         tsBitmap?.let {
             val elapsed = SystemClock.elapsedRealtime() - it
             if(elapsed > Config.SLIDESHOW_INTERVAL_SEC*1000L){

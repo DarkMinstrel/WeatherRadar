@@ -55,9 +55,9 @@ class ActMain : AppCompatActivity() {
         vm.reload()
     }
 
-    override fun onStart() {
-        super.onStart()
-        vm.onActivityStarted()
+    override fun onResume() {
+        super.onResume()
+        vm.onActivityResumed()
     }
 
     override fun onDestroy() {
