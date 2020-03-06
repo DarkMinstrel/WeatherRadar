@@ -11,7 +11,7 @@ object Config {
     const val URL_PAGE = "http://www.meteoinfo.by/radar/?q=%s"
     const val URL_IMAGE = "http://www.meteoinfo.by/radar/%s/%s_%d.png"
     const val SLIDESHOW_ITEMS_COUNT = 10
-    val SLIDESHOW_INTERVAL_SEC = TimeUnit.MINUTES.toSeconds(10L)
+    val SLIDESHOW_INTERVAL_SEC = TimeUnit.MINUTES.toSeconds(15L)
     val SLIDESHOW_ANIMATION_PERIOD_MS = TimeUnit.MILLISECONDS.toMillis(200L)
 
 }

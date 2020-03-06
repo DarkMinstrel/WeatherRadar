@@ -1,7 +1,6 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
 import android.content.Context
-import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -53,11 +52,11 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
                 onError = {error -> liveDataBitmap.value = DataHolder.Error(error)})
     }
 
-    fun onActivityResumed(){
+    fun onActivityStarted(){
         tsBitmap?.let {
-            val elapsed = SystemClock.elapsedRealtime() - it
-            if(elapsed > Config.SLIDESHOW_INTERVAL_SEC*1000L){
-                DBG("Bitmap is outdated, reloading...")
+            val elapsedSeconds = System.currentTimeMillis()/1000 - it
+            if(elapsedSeconds > Config.SLIDESHOW_INTERVAL_SEC){
+                DBG("Bitmap is outdated for $elapsedSeconds seconds, reloading...")
                 reload()
             }
         }

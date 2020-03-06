@@ -16,6 +16,9 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
     signingConfigs {
         release {
             def propsFile = new File("../../signing.properties")
@@ -54,6 +57,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.preference:preference:1.1.0"
     implementation "androidx.preference:preference-ktx:1.1.0"
+    implementation "androidx.core:core-ktx:1.2.0"
     implementation "com.google.android.material:material:1.2.0-alpha05"
     implementation "com.jsibbold:zoomage:1.2.0"
 
