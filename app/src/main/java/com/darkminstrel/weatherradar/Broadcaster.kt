@@ -1,12 +1,11 @@
-package com.darkminstrel.weatherradar.ui
+package com.darkminstrel.weatherradar
 
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import com.darkminstrel.weatherradar.SyncJob
-import com.darkminstrel.weatherradar.assertUiThread
 import com.darkminstrel.weatherradar.repository.Prefs
+import com.darkminstrel.weatherradar.ui.WidgetProvider
 
 class Broadcaster(private val context:Context, private val prefs:Prefs) {
 

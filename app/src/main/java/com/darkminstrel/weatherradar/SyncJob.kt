@@ -70,8 +70,8 @@ class SyncJob : JobService() {
     }
 
     private fun onJobFinished(params: JobParameters, error:Throwable?){
-        if(error==null) DBG("Job finished")
-        else DBG("Job failed with $error")
+        DBG(if(error==null) "Job finished" else "Job failed with $error")
+        disposable = null
         jobFinished(params, false)
     }
 

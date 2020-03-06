@@ -5,7 +5,6 @@ import com.darkminstrel.weatherradar.repository.Api
 import com.darkminstrel.weatherradar.repository.Downloader
 import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.repository.Storage
-import com.darkminstrel.weatherradar.ui.Broadcaster
 import com.darkminstrel.weatherradar.ui.act_main.ActMainViewModel
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
 import io.reactivex.exceptions.UndeliverableException

@@ -4,7 +4,7 @@ import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.repository.Api
 import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.repository.Storage
-import com.darkminstrel.weatherradar.ui.Broadcaster
+import com.darkminstrel.weatherradar.Broadcaster
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 
