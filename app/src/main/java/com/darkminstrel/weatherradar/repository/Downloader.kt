@@ -2,7 +2,9 @@ package com.darkminstrel.weatherradar.repository
 
 import com.darkminstrel.weatherradar.assertIoScheduler
 import io.reactivex.Single
-import okhttp3.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.ResponseBody
 import java.io.IOException
 
 class Downloader {

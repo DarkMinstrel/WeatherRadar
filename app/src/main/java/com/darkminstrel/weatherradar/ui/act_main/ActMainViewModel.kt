@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.darkminstrel.weatherradar.Broadcaster
 import com.darkminstrel.weatherradar.Config
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.DBGE
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.repository.Prefs
-import com.darkminstrel.weatherradar.Broadcaster
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
