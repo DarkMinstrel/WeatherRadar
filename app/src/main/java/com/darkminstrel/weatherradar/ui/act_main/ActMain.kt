@@ -42,9 +42,6 @@ class ActMain : AppCompatActivity(R.layout.act_main) {
         if(item.itemId == R.id.menu_settings){
             startActivityForResult(Intent(this, ActSettings::class.java), 1)
             return true
-        }else if(item.itemId == R.id.menu_legend){
-            vh?.toggleLegend()
-            return true
         }
         return super.onOptionsItemSelected(item)
     }

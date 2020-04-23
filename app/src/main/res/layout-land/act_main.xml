@@ -33,7 +33,7 @@
             android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-                android:id="@+id/legend"
+                android:id="@+id/legend_land"
                 android:layout_width="240dp"
                 android:layout_height="match_parent">
 
@@ -79,7 +79,7 @@
                 tools:src="@drawable/play_icon" />
 
         <ProgressBar
-                android:id="@+id/progress_horizontal"
+                android:id="@+id/fab_progress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="@dimen/circular_progress_radius_x2"
                 android:layout_height="@dimen/circular_progress_radius_x2"
