@@ -11,14 +11,13 @@ import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.ui.act_settings.ActSettings
 import org.koin.android.viewmodel.ext.android.getViewModel
 
-class ActMain : AppCompatActivity() {
+class ActMain : AppCompatActivity(R.layout.act_main) {
 
     private var vh: ActMainViewHolder? = null
     private lateinit var vm: ActMainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.act_main)
 
         vm = getViewModel()
 
