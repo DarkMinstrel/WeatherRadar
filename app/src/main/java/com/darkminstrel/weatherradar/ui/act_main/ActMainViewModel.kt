@@ -20,13 +20,13 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
 
     private var disposable: Disposable? = null
     private var disposableAnimation: Disposable? = null
-    private val liveDataTitle = MutableLiveData<String>()
-    private val liveDataBitmap = MutableLiveData<DataHolder<TimedBitmap>>()
-    private val liveDataSlideshow = MutableLiveData<List<TimedBitmap>>()
+    private val _liveDataTitle = MutableLiveData<String>()
+    private val _liveDataBitmap = MutableLiveData<DataHolder<TimedBitmap>>()
+    private val _liveDataSlideshow = MutableLiveData<List<TimedBitmap>>()
+    val liveDataTitle = _liveDataTitle as LiveData<String>
+    val liveDataBitmap = _liveDataBitmap as LiveData<DataHolder<TimedBitmap>>
+    val liveDataSlideshow = _liveDataSlideshow as LiveData<List<TimedBitmap>>
     private var tsBitmap:Long? = null
-    fun getLiveDataTitle() = this.liveDataTitle as LiveData<String>
-    fun getLiveDataBitmap() = this.liveDataBitmap as LiveData<DataHolder<TimedBitmap>>
-    fun getLiveDataSlideshow() = this.liveDataSlideshow as LiveData<List<TimedBitmap>>
 
     init {
         broadcaster.scheduleSyncJob()
@@ -35,9 +35,9 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
 
     fun reload(){
         val radar = prefs.getRadarEnum()
-        liveDataTitle.value = radar.getCity(context)
-        liveDataBitmap.value = null
-        liveDataSlideshow.value = null
+        _liveDataTitle.value = radar.getCity(context)
+        _liveDataBitmap.value = null
+        _liveDataSlideshow.value = null
 
         disposable?.dispose()
         disposableAnimation?.dispose()
@@ -47,9 +47,9 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
             .subscribeBy(
                 onSuccess = {bitmap ->
                     tsBitmap = bitmap.ts
-                    liveDataBitmap.value = DataHolder.Success(bitmap)
+                    _liveDataBitmap.value = DataHolder.Success(bitmap)
                 },
-                onError = {error -> liveDataBitmap.value = DataHolder.Error(error)})
+                onError = {error -> _liveDataBitmap.value = DataHolder.Error(error)})
     }
 
     fun onActivityStarted(){
@@ -68,11 +68,11 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = {slideshow ->
-                    liveDataSlideshow.value = if(slideshow.size>1) slideshow else null
+                    _liveDataSlideshow.value = if(slideshow.size>1) slideshow else null
                 },
                 onError = {
                     DBGE("Slideshow", it)
-                    liveDataSlideshow.value = null
+                    _liveDataSlideshow.value = null
                 }
             )
     }

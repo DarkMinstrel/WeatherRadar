@@ -10,27 +10,26 @@ import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.ui.act_settings.ActSettings
 import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ActMain : AppCompatActivity(R.layout.act_main) {
 
     private var vh: ActMainViewHolder? = null
-    private lateinit var vm: ActMainViewModel
+    private val vm: ActMainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        vm = getViewModel()
-
         vh = ActMainViewHolder(findViewById(android.R.id.content))
-        vm.getLiveDataTitle().observe(this, Observer{supportActionBar?.subtitle = it})
-        vm.getLiveDataBitmap().observe(this, Observer {
+        vm.liveDataTitle.observe(this, Observer{supportActionBar?.subtitle = it})
+        vm.liveDataBitmap.observe(this, Observer {
             when(it){
                 is DataHolder.Success -> vh?.setImage(it.value.bitmap)
                 is DataHolder.Error -> vh?.setError(it.error)
                 else -> vh?.setProgress()
             }
         })
-        vm.getLiveDataSlideshow().observe(this, Observer { vh?.setSlideshow(it) })
+        vm.liveDataSlideshow.observe(this, Observer { vh?.setSlideshow(it) })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

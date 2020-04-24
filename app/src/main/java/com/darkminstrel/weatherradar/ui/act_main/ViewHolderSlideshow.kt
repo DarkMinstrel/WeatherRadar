@@ -90,7 +90,7 @@ class ViewHolderSlideshow(private val fabProgress: FabProgress, private val imag
     private fun hideFab(animate:Boolean){
         fabProgress.animate().cancel();
         if(animate){
-            fabProgress.animate().scaleX(0f).scaleY(0f).setInterpolator(accelerateInterpolator).start()
+            fabProgress.animate().scaleX(0f).scaleY(0f).setInterpolator(accelerateInterpolator).setDuration(200).start()
         }else{
             fabProgress.scaleX = 0f
             fabProgress.scaleY = 0f
@@ -99,7 +99,7 @@ class ViewHolderSlideshow(private val fabProgress: FabProgress, private val imag
     private fun showFab(animate:Boolean){
         fabProgress.animate().cancel();
         if(animate){
-            fabProgress.animate().scaleX(1f).scaleY(1f).setInterpolator(overshootInterpolator).start()
+            fabProgress.animate().scaleX(1f).scaleY(1f).setInterpolator(overshootInterpolator).setDuration(400).start()
         }else{
             fabProgress.scaleX = 1f
             fabProgress.scaleY = 1f
