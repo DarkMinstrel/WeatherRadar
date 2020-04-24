@@ -62,32 +62,14 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <com.darkminstrel.weatherradar.ui.FabProgress
+            android:id="@+id/fab_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/circular_progress_margin"
             android:layout_gravity="bottom|end"
             android:clipChildren="false"
-            app:layout_dodgeInsetEdges="bottom">
+            app:layout_dodgeInsetEdges="bottom"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:fabSize="normal"
-                tools:src="@drawable/play_icon" />
-
-        <ProgressBar
-                android:id="@+id/fab_progress"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="@dimen/circular_progress_radius_x2"
-                android:layout_height="@dimen/circular_progress_radius_x2"
-                android:indeterminate="false"
-                android:progressDrawable="@drawable/progress_round"
-                tools:max="100"
-                tools:progress="45" />
-
-    </FrameLayout>
 
 </FrameLayout>

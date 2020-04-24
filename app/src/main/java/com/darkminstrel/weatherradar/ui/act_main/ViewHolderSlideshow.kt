@@ -1,45 +1,42 @@
 package com.darkminstrel.weatherradar.ui.act_main
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.graphics.Bitmap
 import android.os.Handler
-import android.view.View
-import android.widget.ProgressBar
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import com.darkminstrel.weatherradar.Config
 import com.darkminstrel.weatherradar.data.TimedBitmap
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.darkminstrel.weatherradar.ui.FabProgress
 
-class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:ProgressBar, private val imageEater:(bitmap:Bitmap)->Unit) {
+@Suppress("SameParameterValue")
+class ViewHolderSlideshow(private val fabProgress: FabProgress, private val imageEater:(bitmap:Bitmap)->Unit) {
 
-    private val vhFab = ViewHolderFab(fab).apply {
-        setPlaying(false)
-        hide(false)
-    }
+    private var appBarCollapsed = false
+    private var slideshow:List<TimedBitmap>? = null
     private var slideshowHandler:SlideshowHandler? = null
-    private var progressAnimator: AnimatorSet? = null
+    init {
+        hideFab(false)
+    }
 
     fun setSlideshow(slideshow:List<TimedBitmap>?){
+        this.slideshow = slideshow
+        updateFabVisibility()
+
         slideshowHandler?.stop()
         slideshowHandler = null
-        animateProgressbar(null)
         if(slideshow==null) {
-            vhFab.hide(true)
-            vhFab.setOnClickListener(null)
+            fabProgress.setOnClickListener(null)
         } else {
-            vhFab.show(true)
-            vhFab.setPlaying(false)
-            vhFab.setOnClickListener{
+            fabProgress.stop()
+            fabProgress.setOnClickListener{
                 if(slideshowHandler!=null){
                     slideshowHandler?.stop()
                     slideshowHandler = null
-                    vhFab.setPlaying(false)
+                    fabProgress.stop()
                 }else{
                     slideshowHandler = SlideshowHandler(slideshow){
                         slideshowHandler = null
-                        vhFab.setPlaying(false)
                     }.apply{ start() }
-                    vhFab.setPlaying(true)
                 }
             }
         }
@@ -50,11 +47,11 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
         private var index = 0
         fun start(){
             runnable.run()
-            animateProgressbar((slideshow.size) * Config.SLIDESHOW_ANIMATION_PERIOD_MS)
+            fabProgress.play((slideshow.size) * Config.SLIDESHOW_ANIMATION_PERIOD_MS)
         }
         fun stop(){
             imageEater.invoke(slideshow.last().bitmap)
-            animateProgressbar(null)
+            fabProgress.stop()
             handler.removeCallbacks(runnable)
         }
         private val runnable = object:Runnable {
@@ -71,22 +68,41 @@ class ViewHolderSlideshow(fab: FloatingActionButton, private val slideProgress:P
         }
     }
 
-    private fun animateProgressbar(duration:Long?){
-        progressAnimator?.cancel()
-        if(duration!=null){
-            if(slideProgress.max!=1000) slideProgress.max = 1000
-            slideProgress.visibility = View.VISIBLE
-            slideProgress.alpha = 1f
-            val animProgress = ObjectAnimator.ofInt(slideProgress, "progress", 0, 1000).setDuration(duration)
-            val animFade = ObjectAnimator.ofFloat(slideProgress, "alpha", 1f, 0f).setDuration(Config.SLIDESHOW_ANIMATION_PERIOD_MS)
+    fun setAppBarCollapsed(collapsed:Boolean){
+        this.appBarCollapsed = collapsed
+        updateFabVisibility()
+    }
 
-            progressAnimator = AnimatorSet().apply {
-                playSequentially(animProgress, animFade)
-                start()
-            }
+    private val accelerateInterpolator = AccelerateInterpolator()
+    private val overshootInterpolator = OvershootInterpolator()
+    private var oldFabVisibility = false
+
+    private fun updateFabVisibility(){
+        val newFabVisibility = slideshow!=null && !appBarCollapsed
+        if(slideshow==null) {
+            hideFab(false)
+        } else if(oldFabVisibility!=newFabVisibility) {
+            if(newFabVisibility) showFab(true) else hideFab(true)
+        }
+        oldFabVisibility = newFabVisibility
+    }
+
+    private fun hideFab(animate:Boolean){
+        fabProgress.animate().cancel();
+        if(animate){
+            fabProgress.animate().scaleX(0f).scaleY(0f).setInterpolator(accelerateInterpolator).start()
         }else{
-            slideProgress.visibility = View.INVISIBLE
-            progressAnimator = null
+            fabProgress.scaleX = 0f
+            fabProgress.scaleY = 0f
+        }
+    }
+    private fun showFab(animate:Boolean){
+        fabProgress.animate().cancel();
+        if(animate){
+            fabProgress.animate().scaleX(1f).scaleY(1f).setInterpolator(overshootInterpolator).start()
+        }else{
+            fabProgress.scaleX = 1f
+            fabProgress.scaleY = 1f
         }
     }
 

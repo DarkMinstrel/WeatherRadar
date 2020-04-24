@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="bottom_sheet_peek_height">128dp</dimen>
 
     <dimen name="circular_progress_radius">32dp</dimen>
     <dimen name="circular_progress_radius_x2">64dp</dimen>

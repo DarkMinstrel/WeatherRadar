@@ -24,7 +24,6 @@ class ActMainViewHolder(root: View) {
     private val legendPort:View? = root.findViewById(R.id.legend_port)
     private val legendContainer = root.findViewById<ViewGroup>(R.id.legend_container)
     private val vhSlideshow = ViewHolderSlideshow(
-        root.findViewById(R.id.fab),
         root.findViewById(R.id.fab_progress),
         this::setImage)
 
@@ -35,8 +34,9 @@ class ActMainViewHolder(root: View) {
             false
         }
 
+        val collapseThreshold = root.resources.getDimensionPixelSize(R.dimen.circular_progress_radius)
         appBar?.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-            //DBG("appbar offs = $verticalOffset")
+            vhSlideshow.setAppBarCollapsed(verticalOffset < -collapseThreshold)
         })
 
         fillLegend()
