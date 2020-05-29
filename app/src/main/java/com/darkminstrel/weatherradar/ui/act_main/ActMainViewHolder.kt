@@ -12,6 +12,7 @@ import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.RadarException
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.data.WeatherType
+import com.darkminstrel.weatherradar.setTopDrawable
 import com.google.android.material.appbar.AppBarLayout
 
 @SuppressLint("ClickableViewAccessibility")
@@ -59,7 +60,13 @@ class ActMainViewHolder(root: View) {
         ivRadar.visibility = View.INVISIBLE
         legendLand?.visibility = View.INVISIBLE
         legendPort?.visibility = View.INVISIBLE
-        error.setText(if(t is RadarException) R.string.radar_unavailable else R.string.network_error)
+        if(t is RadarException){
+            error.setText(R.string.radar_unavailable)
+            error.setTopDrawable(R.drawable.radar)
+        }else{
+            error.setText(R.string.network_error)
+            error.setTopDrawable(R.drawable.dino)
+        }
     }
 
     fun setImage(bitmap: Bitmap){

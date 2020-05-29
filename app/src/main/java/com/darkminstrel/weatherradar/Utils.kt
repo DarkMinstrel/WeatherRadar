@@ -3,6 +3,8 @@ package com.darkminstrel.weatherradar
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
+import android.widget.TextView
+import androidx.annotation.DrawableRes
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -28,6 +30,8 @@ fun assertIoScheduler() {
     val name = Thread.currentThread().name
     if (BuildConfig.DEBUG_FEATURES && !name.startsWith("RxCachedThreadScheduler")) throw RuntimeException("assertIoScheduler() failed, actual thread: $name")
 }
+
+fun TextView.setTopDrawable(@DrawableRes drawableId: Int) = this.setCompoundDrawablesWithIntrinsicBounds(0,drawableId,0,0)
 
 fun DBG(s:Any?){
     if(BuildConfig.DEBUG_FEATURES) {

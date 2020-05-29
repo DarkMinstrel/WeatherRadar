@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawableTop="@drawable/dino"
-            android:drawablePadding="8dp"
+            android:drawablePadding="16dp"
             android:gravity="center_horizontal"
             android:text="@string/network_error"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
