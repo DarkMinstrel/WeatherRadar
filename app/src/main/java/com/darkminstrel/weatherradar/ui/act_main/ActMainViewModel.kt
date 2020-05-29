@@ -10,6 +10,7 @@ import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.DBGE
 import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.TimedBitmap
+import com.darkminstrel.weatherradar.repository.NetworkNotifier
 import com.darkminstrel.weatherradar.repository.Prefs
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,6 +28,9 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
     val liveDataBitmap = _liveDataBitmap as LiveData<DataHolder<TimedBitmap>>
     val liveDataSlideshow = _liveDataSlideshow as LiveData<List<TimedBitmap>>
     private var tsBitmap:Long? = null
+    private val networkNotifier = NetworkNotifier(context, onInternetAvailable = {
+        if(_liveDataBitmap.value is DataHolder.Error) reload()
+    })
 
     init {
         broadcaster.scheduleSyncJob()
@@ -83,6 +87,7 @@ class ActMainViewModel(private val context: Context, private val prefs: Prefs, p
         disposable = null
         disposableAnimation?.dispose()
         disposableAnimation = null
+        networkNotifier.unsubscribe()
     }
 
 }
