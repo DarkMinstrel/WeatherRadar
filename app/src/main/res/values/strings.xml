@@ -9,6 +9,7 @@
     <string name="update_period">Период обновления</string>
     <string name="wifi_only">Только по Wi-Fi</string>
     <string name="dont_update">не обновлять</string>
+    <string name="refresh">Обновить</string>
 
     <string name="network_error">Сервер недоступен</string>
     <string name="radar_unavailable">Радар временно не работает.\nПопробуйте позже.</string>

@@ -16,10 +16,12 @@ import com.darkminstrel.weatherradar.setTopDrawable
 import com.google.android.material.appbar.AppBarLayout
 
 @SuppressLint("ClickableViewAccessibility")
-class ActMainViewHolder(root: View) {
+class ActMainViewHolder(root: View, private val vm:ActMainViewModel) {
     private val ivRadar = root.findViewById<ImageView>(R.id.iv_radar)
     private val progress = root.findViewById<View>(R.id.progress)
-    private val error = root.findViewById<TextView>(R.id.error)
+    private val error = root.findViewById<View>(R.id.error)
+    private val tvError = root.findViewById<TextView>(R.id.tv_error)
+    private val btnRefresh = root.findViewById<View>(R.id.btn_refresh)
     private val appBar:AppBarLayout? = root.findViewById(R.id.app_bar_layout)
     private val legendLand:View? = root.findViewById(R.id.legend_land)
     private val legendPort:View? = root.findViewById(R.id.legend_port)
@@ -39,6 +41,8 @@ class ActMainViewHolder(root: View) {
         appBar?.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             vhSlideshow.setAppBarCollapsed(verticalOffset < -collapseThreshold)
         })
+
+        btnRefresh.setOnClickListener { vm.reload() }
 
         fillLegend()
     }
@@ -61,11 +65,11 @@ class ActMainViewHolder(root: View) {
         legendLand?.visibility = View.INVISIBLE
         legendPort?.visibility = View.INVISIBLE
         if(t is RadarException){
-            error.setText(R.string.radar_unavailable)
-            error.setTopDrawable(R.drawable.radar)
+            tvError.setText(R.string.radar_unavailable)
+            tvError.setTopDrawable(R.drawable.radar)
         }else{
-            error.setText(R.string.network_error)
-            error.setTopDrawable(R.drawable.dino)
+            tvError.setText(R.string.network_error)
+            tvError.setTopDrawable(R.drawable.dino)
         }
     }
 

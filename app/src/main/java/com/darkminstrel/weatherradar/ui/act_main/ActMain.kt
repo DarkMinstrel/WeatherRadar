@@ -20,7 +20,7 @@ class ActMain : AppCompatActivity(R.layout.act_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        vh = ActMainViewHolder(findViewById(android.R.id.content))
+        vh = ActMainViewHolder(findViewById(android.R.id.content), vm)
         vm.liveDataTitle.observe(this, Observer{supportActionBar?.subtitle = it})
         vm.liveDataBitmap.observe(this, Observer {
             when(it){
