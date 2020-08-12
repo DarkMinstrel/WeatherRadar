@@ -9,6 +9,7 @@ class BitmapFactory {
 
     fun decodeBody(body:ResponseBody):Bitmap?{
         assertIoScheduler()
+        //TODO switch to ImageDecoder.decodeBitmap
         return android.graphics.BitmapFactory.decodeStream(body.byteStream())
     }
 
