@@ -25,7 +25,7 @@ class FabProgress @JvmOverloads constructor(
     init {
         inflate(context, R.layout.fabprogress, this)
         fab = findViewById(R.id.fab)
-        progress = findViewById(R.id.progress)
+        progress = findViewById(R.id.progress_circular)
         setPlaying(false)
     }
 

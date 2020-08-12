@@ -16,7 +16,7 @@
             tools:src="@drawable/play_icon" />
 
     <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/progress_circular"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="@dimen/circular_progress_radius_x2"
             android:layout_height="@dimen/circular_progress_radius_x2"
