@@ -31,7 +31,6 @@
 
         <activity
             android:name=".ui.act_settings.ActSettings"
-            android:launchMode="singleTask"
             android:label="@string/settings"/>
 
         <receiver android:name=".ui.WidgetProvider" >
