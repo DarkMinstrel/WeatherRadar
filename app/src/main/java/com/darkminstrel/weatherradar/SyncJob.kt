@@ -62,7 +62,7 @@ class SyncJob : JobService() {
         disposable = usecaseSync.getSyncSingle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {pack ->
+                { _ ->
                     onJobFinished(params, null)
                 },
                 {error -> onJobFinished(params, error)})

@@ -10,11 +10,12 @@ class ActSettings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        supportActionBar?.setDisplayShowHomeEnabled(true);
-
-        if(intent?.action == AppWidgetManager.ACTION_APPWIDGET_CONFIGURE){
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_24px)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            if (intent?.action == AppWidgetManager.ACTION_APPWIDGET_CONFIGURE) {
+                setHomeAsUpIndicator(R.drawable.ic_close_24px)
+            }
         }
 
         if(savedInstanceState==null) {

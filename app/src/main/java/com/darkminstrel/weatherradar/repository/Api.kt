@@ -16,9 +16,9 @@ class Api(private val downloader: Downloader, private val bitmapFactory: BitmapF
         val pattern = String.format("/%s/%s_\\d{10}.png", radar, radar)
         val m = Pattern.compile(pattern).matcher(html)
         if (m.find()) {
-            val s = m.group(0)
+            val s = m.group(0)!!
             val m2 = Pattern.compile("\\d{10}").matcher(s)
-            if(m2.find()) return m2.group(0).toLong()
+            if(m2.find()) return m2.group(0)!!.toLong()
         }
         throw NoTimestampRadarException()
     }

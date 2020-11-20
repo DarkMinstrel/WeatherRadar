@@ -22,8 +22,9 @@ class NetworkNotifier(context:Context, onInternetAvailable:()->Unit) {
                 }
                 override fun onLost(network: Network?) {
                 }
+            }.also {
+                connectivityManager?.registerDefaultNetworkCallback(it)
             }
-            connectivityManager?.registerDefaultNetworkCallback(callback)
         }
     }
 

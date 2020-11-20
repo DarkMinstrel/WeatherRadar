@@ -9,14 +9,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.widget.RemoteViews
+import androidx.core.content.ContextCompat
 import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.repository.Storage
 import com.darkminstrel.weatherradar.ui.act_main.ActMain
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
+@KoinApiExtension
 class WidgetProvider: AppWidgetProvider(), KoinComponent {
 
     private val storage:Storage by inject()
@@ -31,7 +34,7 @@ class WidgetProvider: AppWidgetProvider(), KoinComponent {
                     {bitmap -> updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)},
                     {error ->
                         run {
-                            val bitmap = (context.getDrawable(R.drawable.dino) as BitmapDrawable).bitmap
+                            val bitmap = (ContextCompat.getDrawable(context, R.drawable.dino) as BitmapDrawable).bitmap
                             updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)
                             DBG(error)
                         }

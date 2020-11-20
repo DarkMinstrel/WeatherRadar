@@ -53,7 +53,7 @@ class App:Application() {
                 DBGE("Undeliverable", e)
             } else {
                 Thread.currentThread().also { thread ->
-                    thread.uncaughtExceptionHandler.uncaughtException(thread, e)
+                    thread.uncaughtExceptionHandler?.uncaughtException(thread, e)
                 }
             }
         }

@@ -5,31 +5,32 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.data.DataHolder
+import com.darkminstrel.weatherradar.databinding.ActMainBinding
 import com.darkminstrel.weatherradar.ui.act_settings.ActSettings
-import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ActMain : AppCompatActivity(R.layout.act_main) {
+class ActMain : AppCompatActivity() {
 
     private var vh: ActMainViewHolder? = null
     private val vm: ActMainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = ActMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        vh = ActMainViewHolder(findViewById(android.R.id.content), vm)
-        vm.liveDataTitle.observe(this, Observer{supportActionBar?.subtitle = it})
-        vm.liveDataBitmap.observe(this, Observer {
+        vh = ActMainViewHolder(binding, vm)
+        vm.liveDataTitle.observe(this, {supportActionBar?.subtitle = it})
+        vm.liveDataBitmap.observe(this, {
             when(it){
                 is DataHolder.Success -> vh?.setImage(it.value.bitmap)
                 is DataHolder.Error -> vh?.setError(it.error)
                 else -> vh?.setProgress()
             }
         })
-        vm.liveDataSlideshow.observe(this, Observer { vh?.setSlideshow(it) })
+        vm.liveDataSlideshow.observe(this, { vh?.setSlideshow(it) })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
