@@ -2,7 +2,7 @@ package com.darkminstrel.weatherradar.repository
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.darkminstrel.weatherradar.Config
 import com.darkminstrel.weatherradar.data.Radar
 import com.darkminstrel.weatherradar.data.UpdatePeriod

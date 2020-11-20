@@ -14,7 +14,6 @@ class FrgSettingsViewHolder(context: Context, preferenceManager:PreferenceManage
     private val cbWifiOnly: CheckBoxPreference = CheckBoxPreference(context)
 
     init{
-
         listRadars.isPersistent = false
         listRadars.key = Prefs.KEY_RADAR
         listRadars.title = context.getString(R.string.radar)
