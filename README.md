@@ -1,2 +1,2 @@
 # WeatherRadar
-![Animation](docs/animation1.gif)
+![Animation](docs/animation.gif)
