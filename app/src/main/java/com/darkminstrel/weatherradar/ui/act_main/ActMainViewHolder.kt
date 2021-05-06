@@ -6,13 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.darkminstrel.weatherradar.DBG
-import com.darkminstrel.weatherradar.R
-import com.darkminstrel.weatherradar.RadarException
+import com.darkminstrel.weatherradar.*
 import com.darkminstrel.weatherradar.data.TimedBitmap
 import com.darkminstrel.weatherradar.data.WeatherType
 import com.darkminstrel.weatherradar.databinding.ActMainBinding
-import com.darkminstrel.weatherradar.setTopDrawable
 import com.google.android.material.appbar.AppBarLayout
 
 @SuppressLint("ClickableViewAccessibility")
@@ -61,7 +58,11 @@ class ActMainViewHolder(private val binding: ActMainBinding, private val vm:ActM
             legendLand?.visibility = View.INVISIBLE
             legendPort?.visibility = View.INVISIBLE
             if(t is RadarException){
-                tvError.setText(R.string.radar_unavailable)
+                if(t is NoTimestampRadarException && t.reason!=null){
+                    tvError.text = t.reason
+                }else{
+                    tvError.setText(R.string.radar_unavailable)
+                }
                 tvError.setTopDrawable(R.drawable.radar)
             }else{
                 tvError.setText(R.string.network_error)

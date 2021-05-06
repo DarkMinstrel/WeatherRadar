@@ -14,7 +14,9 @@ import com.darkminstrel.weatherradar.DBG
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.repository.Storage
 import com.darkminstrel.weatherradar.ui.act_main.ActMain
-import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -28,17 +30,15 @@ class WidgetProvider: AppWidgetProvider(), KoinComponent {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         if(appWidgetIds.isNotEmpty()){
             DBG("Updating widget")
-            storage.read()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe (
-                    {bitmap -> updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)},
-                    {error ->
-                        run {
-                            val bitmap = (ContextCompat.getDrawable(context, R.drawable.dino) as BitmapDrawable).bitmap
-                            updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)
-                            DBG(error)
-                        }
-                    })
+            CoroutineScope(Dispatchers.Main).launch {
+                val bitmap:Bitmap = try{
+                     storage.read()
+                }catch (e:Throwable){
+                    DBG(e)
+                    (ContextCompat.getDrawable(context, R.drawable.dino) as BitmapDrawable).bitmap
+                }
+                updateWidgets(context, appWidgetManager, appWidgetIds, bitmap)
+            }
         }
     }
 

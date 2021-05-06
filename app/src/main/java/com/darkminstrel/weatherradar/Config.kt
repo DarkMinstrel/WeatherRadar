@@ -4,7 +4,7 @@ import com.darkminstrel.weatherradar.data.Radar
 import java.util.concurrent.TimeUnit
 
 object Config {
-    val DEFAULT_RADAR = Radar.KIEV.code
+    val DEFAULT_RADAR = Radar.MINSK.code
     const val DEFAULT_UPDATE_PERIOD = 0L
     const val DEFAULT_WIFI_ONLY = false
 

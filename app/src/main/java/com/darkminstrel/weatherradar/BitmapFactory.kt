@@ -1,23 +1,23 @@
 package com.darkminstrel.weatherradar
 
 import android.graphics.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BitmapFactory {
 
-    fun decodeBody(body:ResponseBody):Bitmap?{
-        assertIoScheduler()
+    suspend fun decodeBody(body:ResponseBody):Bitmap? = withContext(Dispatchers.IO){
         //TODO switch to ImageDecoder.decodeBitmap
-        return android.graphics.BitmapFactory.decodeStream(body.byteStream())
+        return@withContext android.graphics.BitmapFactory.decodeStream(body.byteStream())
     }
 
-    fun prepareBitmap(rawBitmap: Bitmap, ts:Long):Bitmap{
-        assertComputationScheduler()
+    suspend fun prepareBitmap(rawBitmap: Bitmap, ts:Long):Bitmap = withContext(Dispatchers.IO){
         val bitmap = cropBitmap(rawBitmap)
         drawTime(bitmap, ts*1000)
-        return bitmap
+        return@withContext bitmap
     }
 
     private fun cropBitmap(bitmap: Bitmap): Bitmap {

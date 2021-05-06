@@ -7,10 +7,13 @@ import android.app.job.JobService
 import android.content.ComponentName
 import android.content.Context
 import android.os.Build
+import com.darkminstrel.weatherradar.data.DataHolder
 import com.darkminstrel.weatherradar.data.UpdatePeriod
 import com.darkminstrel.weatherradar.usecases.UsecaseSync
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class SyncJob : JobService() {
@@ -53,19 +56,16 @@ class SyncJob : JobService() {
         }
     }
 
-    private var disposable:Disposable? = null
+    private var disposable: Job? = null
     private val usecaseSync:UsecaseSync by inject()
 
     override fun onStartJob(params: JobParameters): Boolean {
         DBG("Job started")
-        disposable?.dispose()
-        disposable = usecaseSync.getSyncSingle()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { _ ->
-                    onJobFinished(params, null)
-                },
-                {error -> onJobFinished(params, error)})
+        disposable?.cancel()
+        disposable = CoroutineScope(Dispatchers.IO).launch {
+            val timedBitmap = usecaseSync.sync()
+            onJobFinished(params, (timedBitmap as? DataHolder.Error)?.error)
+        }
         return true //job hasn't finished yet
     }
 
@@ -76,7 +76,7 @@ class SyncJob : JobService() {
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
-        disposable?.dispose()
+        disposable?.cancel()
         disposable = null
         return false //don't reschedule
     }

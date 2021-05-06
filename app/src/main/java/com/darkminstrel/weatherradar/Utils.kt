@@ -22,14 +22,6 @@ fun assertWorkerThread(){
 fun assertUiThread(){
     if(Thread.currentThread() != Looper.getMainLooper().thread) throw RuntimeException("assertUiThread() failed")
 }
-fun assertComputationScheduler() {
-    val name = Thread.currentThread().name
-    if (BuildConfig.DEBUG_FEATURES && !name.startsWith("RxComputationThreadPool")) throw RuntimeException("assertComputationScheduler() failed, actual thread: $name")
-}
-fun assertIoScheduler() {
-    val name = Thread.currentThread().name
-    if (BuildConfig.DEBUG_FEATURES && !name.startsWith("RxCachedThreadScheduler")) throw RuntimeException("assertIoScheduler() failed, actual thread: $name")
-}
 
 fun TextView.setTopDrawable(@DrawableRes drawableId: Int) = this.setCompoundDrawablesWithIntrinsicBounds(0,drawableId,0,0)
 

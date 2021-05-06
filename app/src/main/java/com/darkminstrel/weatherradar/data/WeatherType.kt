@@ -5,7 +5,7 @@ import android.graphics.Color
 import androidx.annotation.StringRes
 import com.darkminstrel.weatherradar.R
 import com.darkminstrel.weatherradar.Stopwatch
-import com.darkminstrel.weatherradar.assertComputationScheduler
+import com.darkminstrel.weatherradar.assertWorkerThread
 import java.util.*
 
 enum class WeatherType(@StringRes val stringId:Int, val color:Int) {
@@ -36,7 +36,7 @@ enum class WeatherType(@StringRes val stringId:Int, val color:Int) {
             return Math.abs(Color.red(c1)-Color.red(c2))+Math.abs(Color.green(c1)-Color.green(c2))+Math.abs(Color.blue(c1)-Color.blue(c2))
         }
         fun collectColors(bitmap: Bitmap): Map<WeatherType, Int> {
-            assertComputationScheduler()
+            assertWorkerThread()
             val stopwatch = Stopwatch()
             val map = IdentityHashMap<WeatherType, Int>()
             for(x in 0 until bitmap.width){
